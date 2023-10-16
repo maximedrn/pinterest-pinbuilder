@@ -1,0 +1,26 @@
+urllib3
+requests
+psutil
+pillow==9.2.0
+# PyQt6: only for Windows (10 and 11), Linux and macOS.
+pyqt6; sys_platform == 'linux' or sys_platform == 'darwin' or (sys_platform == 'win32' and (platform_release == '10' or platform_release == '11'))
+pyqt6-qt6; sys_platform == 'linux' or sys_platform == 'darwin' or (sys_platform == 'win32' and (platform_release == '10' or platform_release == '11'))
+pyqt6-sip; sys_platform == 'linux' or sys_platform == 'darwin' or (sys_platform == 'win32' and (platform_release == '10' or platform_release == '11'))
+# PyQt5: only for Windows 7, 8 and 8.1.
+pyqt5; sys_platform == 'win32' and (platform_release == '7' or platform_release == '8' or platform_release == '8.1')
+pyqt5-qt5; sys_platform == 'win32' and (platform_release == '7' or platform_release == '8' or platform_release == '8.1')
+pyqt5-sip; sys_platform == 'win32' and (platform_release == '7' or platform_release == '8' or platform_release == '8.1')
+bottle
+future
+tqdm
+pyparsing
+gevent
+greenlet
+colorama==0.4.5
+selenium==4.5.0
+undetected_chromedriver==3.4.4
+webdriver-manager==4.0.0
+eel>=0.15.3
+validators==0.20.0
+filetype==1.2.0
+opencv-python==4.6.0.66

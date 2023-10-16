@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+
+:root {
+    --account-container-max-width: 320px;
+    --account-image-width: clamp(50px, 50%, 60px);
+}
+
+.container__account {
+    display: grid;
+    grid-gap: var(--padding-small);
+    grid-template-columns: repeat(4, 1fr);
+    max-height: var(--account-container-max-width);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.container__account-element {
+    padding: var(--padding-medium);
+    background: var(--quaternary);
+    border-radius: var(--border-radius-small);
+    gap: var(--padding-medium);
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.container__account-element>img {
+    width: var(--account-image-width);
+    border: var(--border-width-medium) solid var(--border-focus);
+    border-radius: 100%;
+    background: var(--white);
+}
+
+.container__account-text {
+    display: inline-grid;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+}
+
+.container__account-text>span:first-child {
+    color: var(--secondary);
+}
+
+.container__account-text>span:last-child {
+    font-size: var(--text-xx-small);
+}
+
+@media screen and (max-width: 1200px) {
+    .container__account {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .container__account {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 670px) {
+    .container__account {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Pinterest Pinbuilder</title>
+        <link rel="icon" type="image/png" href="./assets/favicon-light.png?v=2" id="favicon">
+        <link rel="stylesheet" href="./styles/styles.css">
+        <link rel="stylesheet" href="./styles/pages/create.css">
+        <!-- Do not remove this. Prevent local server to crash. -->
+        <!-- https://github.com/ChrisKnott/Eel/issues/268#issuecomment-647299184 -->
+        <script type="text/javascript" src="/eel.js"></script>
+        <script type="module" src="./scripts/pages/create.js" defer></script>
+        <script type="module" src="./scripts/vendor/masonry/masonry.pkgd.min.js"></script>
+        <script type="module" src="./scripts/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+        <script type="module" src="./scripts/vendor/flatpickr/flatpickr.pkgd.min.js"></script>
+    </head>
+
+    <body class="container__column">
+        <header class="container__row">
+            <!-- Left side of the page. -->
+            <section class="container__column container__gap-medium">
+                <section class="container__field container__assets">
+                    <section>
+                        <h3 class="field__required">Assets (images or videos)</h3>
+                        <p>Select a folder containing the assets for your Pins.</p>
+                    </section>
+
+                    <article class="container__list container__column">
+                        <section class="container__list-element container__browsed-folder">
+                            <section type="button" class="container__list-text">
+                                <i class="icon__material icon__medium">computer</i>
+                                <p>Browse an assets folder on my computer</p>
+                            </section>
+                            <section class="container__list-text container__list-selected" style="display: none;">
+                                <section>
+                                    <p></p>
+                                    <p></p>
+                                </section>
+                                <i type="button" class="icon__material icon__small icon__clear">clear</i>
+                            </section>
+                        </section>
+
+                        <section class="container__preview-text">
+                            <p>Please select a folder containing assets to get started.</p>
+                        </section>
+
+                        <section class="container__list-assets"></section>
+                    </article>
+                </section>
+            </section>
+
+            <hr class="vertical__rule">
+
+            <!-- Right side of the page. -->
+            <section class="container__column container__gap-medium container__tips">
+                <section class="container__field">
+                    <section>
+                        <h3>Explanations of the different options</h3>
+                        <p>Select a file created with the tool to be used in the process.</p>
+                    </section>
+
+                    <article class="container__row">
+                        <section class="container__column container__gap-medium">
+                            <span>Apply for all</span>
+                            <p>It will apply the value of the related field to all the Pins.</p>
+                        </section>
+                        <section class="container__column container__gap-medium">
+                            <span>Delete for all</span>
+                            <p>It will delete the value of the related field for all Pins.</p>
+                        </section>
+                        <section class="container__column container__gap-medium">
+                            <span>Empty field</span>
+                            <p>It will delete the content of the related field.</p>
+                        </section>
+                        <section class="container__column container__gap-medium">
+                            <span>Load chunk</span>
+                            <p>
+                                The contents of the assets folder are divided into chunks, 
+                                it loads the previous or next chunk.
+                            </p>
+                        </section>
+                        <section class="container__column container__gap-medium">
+                            <span>Select asset</span>
+                            <p>
+                                It selects the previous or next asset without 
+                                having to scroll to the top of the page to select it.
+                            </p>
+                        </section>
+                    </article>
+            </section>
+        </header>
+
+        <nav class="container__row container__assets-buttons">
+            <section type="button" name="previous-chunk" class="button__medium unreachable">
+                <i class="icon__material">fast_forward</i>
+                <p>Load previous chunk</p>
+            </section>
+            <section type="button" name="next-chunk" class="button__medium unreachable">
+                <i class="icon__material">fast_rewind</i>
+                <p>Load next chunk</p>
+            </section>
+            <section type="button" name="previous-asset" class="button__medium unreachable">
+                <i class="icon__material" style="transform: scaleX(-1);">play_arrow</i>
+                <p>Select previous asset</p>
+            </section>
+            <section type="button" name="next-asset" class="button__medium unreachable">
+                <i class="icon__material">play_arrow</i>
+                <p>Select next asset</p>
+            </section>
+        </nav>
+
+        <main class="container__row unreachable">
+            <!-- Left side of the page. -->
+            <section class="container__column container__gap-medium">
+                <section class="container__field">
+                    <section class="container__checkbox">
+                        <section>
+                            <h3 class="field__required">Switch to a promotable Pin</h3>
+                            <p>Create a promotable Pin instead of an organic Pin.</p>
+                        </section>
+                        
+                        <section class="container__input-checkbox">
+                            <input type="checkbox" name="promotable-pin" id="promotable-pin">
+                            <label for="promotable-pin"></label>
+                        </section>
+                    </section>
+
+                    <section class="container__row container__gap-medium container__action-buttons">
+                        <section type="button" name="apply-for-all" class="button__medium">
+                            <i class="icon__material">group_work</i>
+                            <p>Apply for all</p>
+                        </section>
+                        <section type="button" name="remove-for-all" class="button__medium">
+                            <i class="icon__material">remove_circle</i>
+                            <p>Remove for all</p>
+                        </section>
+                        <section type="button" name="remove-by-index" class="button__medium">
+                            <i class="icon__material">delete</i>
+                            <p>Empty field</p>
+                        </section>
+                    </section>
+                </section>
+
+                <hr class="horizontal__rule">
+
+                <section class="container__field">
+                    <section>
+                        <h3>Pinboard URL</h3>
+                        <p title="https://www.pinterest.com/&lt;user&gt;/&lt;pinboard&gt;/&lt;section&gt;">
+                            Type the URL of your Pinboard following the URL format.</p>
+                    </section>
+                    
+                    <section class="container__input">
+                        <input type="url" name="pinboard" placeholder="https://www.pinterest.com/"
+                            value="https://www.pinterest.com/">
+                    </section>
+
+                    <section class="container__row container__gap-medium container__action-buttons">
+                        <section type="button" name="apply-for-all" class="button__medium">
+                            <i class="icon__material">group_work</i>
+                            <p>Apply for all</p>
+                        </section>
+                        <section type="button" name="remove-for-all" class="button__medium">
+                            <i class="icon__material">remove_circle</i>
+                            <p>Remove for all</p>
+                        </section>
+                        <section type="button" name="remove-by-index" class="button__medium">
+                            <i class="icon__material">delete</i>
+                            <p>Empty field</p>
+                        </section>
+                    </section>
+                </section>
+
+                <section class="container__field">
+                    <section>
+                        <h3>Title</h3>
+                        <p>
+                            Define a title for your Pin.  
+                            <br /><i class="icon__material icon__small">looks_one</i>
+                            It must not exceed the 100-character limit.
+                        </p>
+                    </section>
+                    
+                    <section class="container__input">
+                        <input type="text" name="title" placeholder="Add your title">
+                    </section>
+
+                    <section class="container__row container__gap-medium container__action-buttons">
+                        <section type="button" name="apply-for-all" class="button__medium">
+                            <i class="icon__material">group_work</i>
+                            <p>Apply for all</p>
+                        </section>
+                        <section type="button" name="remove-for-all" class="button__medium">
+                            <i class="icon__material">remove_circle</i>
+                            <p>Remove for all</p>
+                        </section>
+                        <section type="button" name="remove-by-index" class="button__medium">
+                            <i class="icon__material">delete</i>
+                            <p>Empty field</p>
+                        </section>
+                    </section>
+                </section>
+
+                <section class="container__field">
+                    <section>
+                        <h3>Description</h3>
+                        <p>
+                            Define a description for your Pin. 
+                            <br /><i class="icon__material icon__small">looks_one</i>
+                            It must not exceed the 500-character limit.
+                        </p>
+                    </section>
+                    
+                    <section class="container__input">
+                        <textarea type="text" name="description"
+                            placeholder="Write a detailed description of your Pin"></textarea>
+                    </section>
+
+                    <section class="container__row container__gap-medium container__action-buttons">
+                        <section type="button" name="apply-for-all" class="button__medium">
+                            <i class="icon__material">group_work</i>
+                            <p>Apply for all</p>
+                        </section>
+                        <section type="button" name="remove-for-all" class="button__medium">
+                            <i class="icon__material">remove_circle</i>
+                            <p>Remove for all</p>
+                        </section>
+                        <section type="button" name="remove-by-index" class="button__medium">
+                            <i class="icon__material">delete</i>
+                            <p>Empty field</p>
+                        </section>
+                    </section>
+                </section>
+            </section>
+
+            <hr class="vertical__rule">
+
+            <!-- Right side of the page. -->
+            <section class="container__column container__gap-medium">
+                <section class="container__field pin__paid unreachable">
+                    <section>
+                        <h3>Alternative text</h3>
+                        <p>
+                            Define an alternative text for your Pin. 
+                            <br /><i class="icon__material icon__small">looks_one</i>
+                            It must not exceed the 500-character limit.
+                        </p>
+                    </section>
+                    
+                    <section class="container__input">
+                        <textarea type="text" name="alternative-text"
+                            placeholder="Explain what people can see in the Pin"></textarea>
+                    </section>
+
+                    <section class="container__row container__gap-medium container__action-buttons">
+                        <section type="button" name="apply-for-all" class="button__medium">
+                            <i class="icon__material">group_work</i>
+                            <p>Apply for all</p>
+                        </section>
+                        <section type="button" name="remove-for-all" class="button__medium">
+                            <i class="icon__material">remove_circle</i>
+                            <p>Remove for all</p>
+                        </section>
+                        <section type="button" name="remove-by-index" class="button__medium">
+                            <i class="icon__material">delete</i>
+                            <p>Empty field</p>
+                        </section>
+                    </section>
+                </section>
+
+                <section class="container__field pin__organic">
+                    <section>
+                        <h3>Topic tags</h3>
+                        <p>Add tags to your Pins for better referencing.</p>
+                    </section>
+                    
+                    <section class="container__input container__select">
+                        <input type="text" name="topic-tags" placeholder="Search for a tag">
+                        <ul class="container__column container__gap-small"></ul>
+                    </section>
+
+                    <section class="container__row container__gap-small container__topic-tags"></section>
+
+                    <section class="container__row container__gap-medium container__action-buttons">
+                        <section type="button" name="apply-for-all" class="button__medium">
+                            <i class="icon__material">group_work</i>
+                            <p>Apply for all</p>
+                        </section>
+                        <section type="button" name="remove-for-all" class="button__medium">
+                            <i class="icon__material">remove_circle</i>
+                            <p>Remove for all</p>
+                        </section>
+                        <section type="button" name="remove-by-index" class="button__medium">
+                            <i class="icon__material">delete</i>
+                            <p>Empty field</p>
+                        </section>
+                    </section>
+                </section>
+
+                <section class="container__field">
+                    <section>
+                        <h3>Destination link</h3>
+                        <p>Add a destination link to your Pin.</p>
+                    </section>
+                    
+                    <section class="container__input">
+                        <input type="url" name="link" placeholder="https://" value="https://">
+                    </section>
+
+                    <section class="container__row container__gap-medium container__action-buttons">
+                        <section type="button" name="apply-for-all" class="button__medium">
+                            <i class="icon__material">group_work</i>
+                            <p>Apply for all</p>
+                        </section>
+                        <section type="button" name="remove-for-all" class="button__medium">
+                            <i class="icon__material">remove_circle</i>
+                            <p>Remove for all</p>
+                        </section>
+                        <section type="button" name="remove-by-index" class="button__medium">
+                            <i class="icon__material">delete</i>
+                            <p>Empty field</p>
+                        </section>
+                    </section>
+                </section>
+
+                <section class="container__field">
+                    <section>
+                        <h3>Schedule for later</h3>
+                        <p>
+                            You can only schedule for a maximum of 1 month from midnight yesterday. 
+                            Leave empty so that the Pin is immediately visible.
+                        </p>
+                    </section>
+                    
+                    <section class="container__input">
+                        <input type="datetime-local" name="datetime" id="datetime">
+                    </section>
+
+                    <section class="container__row container__gap-medium container__action-buttons">
+                        <section type="button" name="apply-for-all" class="button__medium">
+                            <i class="icon__material">group_work</i>
+                            <p>Apply for all</p>
+                        </section>
+                        <section type="button" name="remove-for-all" class="button__medium">
+                            <i class="icon__material">remove_circle</i>
+                            <p>Remove for all</p>
+                        </section>
+                        <section type="button" name="remove-by-index" class="button__medium">
+                            <i class="icon__material">delete</i>
+                            <p>Empty field</p>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </main>
+
+        <footer>
+            <section type="button" class="button__large unreachable" name="save-button">
+                <span>Save</span>
+            </section>
+        </footer>
+
+        <section class="snackbar__container">
+            <i class="icon__material icon__large">warning</i>
+            <p></p>
+        </section>
+    </body>
+</html>

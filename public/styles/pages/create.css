@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+@import "../base/constants.css";
+@import "../base/typography.css";
+@import "../components/buttons.css";
+@import "../components/checkbox.css";
+@import "../components/icons.css";
+@import "../components/inputs.css";
+@import "../components/rules.css";
+@import "../layout/account.css";
+@import "../layout/assets.css";
+@import "../layout/container.css";
+@import "../layout/list.css";
+@import "../layout/popup.css";
+@import "../layout/select.css";
+@import "../layout/snackbar.css";
+@import "../layout/tips.css";
+@import "../vendor/flatpickr/flatpickr.css";
+
+
+body {
+    max-width: var(--body-section-max-width);
+    margin: 0 auto !important;
+    padding: var(--padding-medium) var(--padding-x-large);
+    gap: var(--padding-xx-large);
+    height: fit-content;
+}
+
+header,
+main {
+    gap: var(--padding-large);
+}
+
+header>section,
+main>section {
+    width: var(--body-section-width);
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        flex-direction: column !important;
+    }
+
+    header {
+        flex-direction: column-reverse !important;
+    }
+
+    main>section,
+    header>section {
+        width: 100%;
+    }
+
+    main>hr,
+    header>hr {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 250px) {
+    body {
+        padding: var(--padding-medium);
+    }
+}

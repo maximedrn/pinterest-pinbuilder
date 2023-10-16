@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Pinterest Pinbuilder</title>
+        <link rel="icon" type="image/png" href="./assets/favicon-light.png?v=2" id="favicon">
+        <link rel="stylesheet" href="./styles/styles.css">
+        <link rel="stylesheet" href="./styles/pages/process.css">
+        <!-- Do not remove this. Prevent local server to crash. -->
+        <!-- https://github.com/ChrisKnott/Eel/issues/268#issuecomment-647299184 -->
+        <script type="text/javascript" src="/eel.js"></script>
+        <script type="module" src="./scripts/pages/process.js" defer></script>
+    </head>
+
+    <body class="container__column">
+        <main class="container__row">
+            <!-- Left side of the page. -->
+            <section class="container__column container__gap-medium">
+                <section class="container__field">
+                    <section>
+                        <h3 class="field__required">Process file</h3>
+                        <p>Select a file created with the tool to be used in the process.</p>
+                    </section>
+
+                    <article class="container__list container__column">
+                        <section type="button" class="container__list-element container__list-text container__list-reload">
+                            <i class="icon__material icon__medium">refresh</i>
+                            <p>Reload the process file list</p>
+                        </section>
+
+                        <section class="container__list-element container__browsed-file">
+                            <section type="button" class="container__list-text">
+                                <i class="icon__material icon__medium">computer</i>
+                                <p>Browse a process file on my computer</p>
+                            </section>
+                            <section class="container__list-text container__list-selected" style="display: none;">
+                                <p></p>
+                                <i type="button" class="icon__material icon__small icon__clear">clear</i>
+                            </section>
+                        </section>
+                    </article>
+                </section>
+
+                <hr class="horizontal__rule">
+
+                <section class="container__field">
+                    <section>
+                        <h3 class="field__required">Start from</h3>
+                        <p>
+                            The element index of the metadata file. Start from element n&deg;... 
+                            Do not combine with the "Continue from where it left off" checkbox!
+                        </p>
+                    </section>
+                    
+                    <section class="container__input">
+                        <input type="number" inputmode="numeric" min="1" value="1"
+                            name="starting-value">
+                    </section>
+                </section>
+
+                <section class="container__field">
+                    <section>
+                        <h3 class="field__required">Number of attempts for each Pin</h3>
+                        <p>
+                            The tool will retry a number of times before failing and 
+                            creating a file.
+                        </p>
+                    </section>
+                    
+                    <section class="container__input">
+                        <input type="number" inputmode="numeric" min="1" value="2"
+                            name="maximum-attempts">
+                    </section>
+                </section>
+
+                <section class="container__checkbox">
+                    <section>
+                        <h3 class="field__required">Continue where it left off</h3>
+                        <p>
+                            If checked, the tool will continue the process 
+                            linked to the selected file where it left off.
+                        </p>
+                    </section>
+                    
+                    <section class="container__input-checkbox">
+                        <input type="checkbox" name="delete-temp-folder" id="delete-temp-folder">
+                        <label for="delete-temp-folder"></label>
+                    </section>
+                </section>
+            </section>
+
+            <hr class="vertical__rule">
+            
+            <!-- Right side of the page. -->
+            <section class="container__column container__gap-medium">                
+                <section class="container__field">
+                    <section>
+                        <h3 class="field__required">Account</h3>
+                        <p>
+                            Select an already saved account in the tool or log in to a new 
+                            account before starting the upload.
+                        </p>
+                    </section>
+
+                    <article class="container__account">
+                        <section type="button" class="container__column container__account-element">
+                            <i class="icon__material icon__xx-large">add_circle</i>
+                            <section class="container__account-text">
+                                <span>Log in to a new account</span>
+                            </section>
+                        </section>
+                    </article>
+                </section>
+
+                <hr class="horizontal__rule">
+
+                <section class="container__field">
+                    <section>
+                        <h3>Process output</h3>
+                        <p>See the progress of the process in real time.</p>
+                    </section>
+
+                    <article class="container__list container__column container__process-output">
+                        <section class="container__preview-text">
+                            <p>No output is available at the moment.</p>
+                        </section>
+                        <section class="container__column container__outputs"></section>
+                    </article>
+                </section>
+            </section>
+        </main>
+
+        <footer class="container__row container__gap-small">
+            <section type="button" class="button__large" name="upload-button">
+                <span>Start</span>
+            </section>
+            <section type="button" class="button__large" name="login-button" style="display: none;">
+                <span>Stop login</span>
+            </section>
+        </footer>
+
+        <section class="snackbar__container">
+            <i class="icon__material icon__large">warning</i>
+            <p></p>
+        </section>
+    </body>
+</html>

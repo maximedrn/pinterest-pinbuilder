@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+
+:root {
+    --list-container-height: 270px;
+}
+
+.container__list {
+    padding: var(--padding-small);
+    border: var(--border-width-medium) solid var(--border);
+    border-radius: var(--border-radius-medium);
+    gap: var(--padding-small);
+    height: var(--list-container-height);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.container__list-element {
+    border-radius: var(--border-radius-small);
+    padding: var(--padding-small);
+    background: var(--quaternary);
+}
+
+.container__list-element.success {
+    background: var(--green);
+}
+
+.container__list-element.failure {
+    background: var(--red);
+}
+
+.container__list-text {
+    display: flex;
+    flex-direction: row;
+    gap: var(--padding-medium);
+}
+
+.container__list-text>* {
+    margin: auto 0;
+}
+
+.container__list-text>span {
+    padding: var(--padding-x-small) var(--padding-medium);
+    background: var(--border);
+    color: var(--secondary);
+    border-radius: var(--border-radius-small);
+}
+
+.container__list-text>p {
+    color: var(--secondary);
+    font-size: var(--text-small);
+    flex: 1;
+}
+
+.container__list-selected {
+    margin-top: var(--padding-small);
+    justify-content: space-between;
+}
+
+.container__list-selected>section {
+    overflow: hidden;
+}
+
+.container__list-selected p {
+    font-size: var(--text-xx-small);
+    overflow: hidden;
+}
+
+.icon__clear {
+    padding: var(--padding-small);
+    background: var(--border);
+    border-radius: 100%;
+}

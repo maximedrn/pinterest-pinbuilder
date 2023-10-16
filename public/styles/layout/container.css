@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+
+.container__column {
+    display: flex;
+    flex-direction: column;
+}
+
+.container__gap-medium {
+    gap: var(--padding-medium);
+}
+
+.container__gap-small {
+    gap: var(--padding-small);
+}
+
+.container__row {
+    display: flex;
+    flex-direction: row;
+}
+
+.container__field {
+    gap: var(--padding-medium);
+    display: inline-grid;
+}

@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+
+.icon__material {
+    font-family: "Material Icons";
+    font-style: normal;
+    vertical-align: middle;
+    color: var(--secondary);
+    margin: auto 0;
+}
+
+.icon__xx-large {
+    font-size: var(--text-xx-large);
+}
+
+.icon__large {
+    font-size: var(--text-large);
+}
+
+.icon__medium {
+    font-size: var(--text-medium);
+}
+
+.icon__small {
+    font-size: var(--text-small);
+}
+
+.dark img[src*=".svg"] {
+    filter: invert(1);
+}

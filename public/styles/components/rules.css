@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+
+:root {
+    --vertical-rule-thickness: 1px;
+    --horizontal-rule-thickness: 2px;
+}
+
+.vertical__rule,
+.horizontal__rule {
+    background: var(--border);
+    border: none;
+}
+
+.vertical__rule {
+    width: var(--vertical-rule-thickness);
+    padding: var(--padding-xx-large) 0;
+}
+
+.horizontal__rule {
+    width: 100%;
+    height: var(--horizontal-rule-thickness);
+    padding: 0 var(--padding-large);
+}

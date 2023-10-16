@@ -1,0 +1,72 @@
+@charset "UTF-8";
+
+
+:root {
+    --button-large-min-width: 150px;
+    --button-medium-min-width:  min(120px, 100%);
+}
+
+.button__large,
+.button__medium {
+    width: fit-content;
+    text-align: center;
+    align-content: center;
+}
+
+.button__large {
+    min-width: var(--button-large-min-width);
+    padding: var(--padding-medium) var(--padding-x-large);
+    border-radius: var(--border-radius-medium);
+    background: var(--color);
+}
+
+.button__large.selected,
+.button__large.selected:hover {
+    filter: grayscale(1);
+    opacity: 50%;
+    pointer-events: none !important;
+    color: var(--secondary);
+}
+
+.button__large>span {
+    font-size: var(--text-medium);
+    font-weight: var(--font-large);
+    color: var(--white);
+}
+
+.button__large>span,
+.button__medium>p {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.button__large.selected>span {
+    color: var(--secondary);
+}
+
+.button__medium {
+    min-width: var(--button-medium-min-width);
+    padding: var(--padding-small) var(--padding-large);
+    border-radius: var(--border-radius-small);
+    background: var(--border);
+}
+
+.button__medium>span {
+    font-size: var(--text-x-small);
+    font-weight: var(--font-small);
+}
+
+@media screen and (max-width: 280px) {
+    .button__large,
+    .button__medium {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .button__large>span,
+    .button__medium>span {
+        font-size-adjust: .8;
+    }
+}

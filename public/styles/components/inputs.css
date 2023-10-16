@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+
+input,
+textarea {
+    font-weight: var(--font-small);
+    font-size: var(--text-small);
+    font-family: var(--font-family);
+    padding: var(--padding-small) var(--padding-medium);
+    border-radius: var(--border-radius-small);
+    border: var(--border-width-medium) solid var(--border);
+    background: var(--primary);
+    width: 100%;
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    height: calc(5 * var(--text-small));
+    max-height: calc(8 * var(--text-small));
+    min-height: calc(2.75 * var(--text-small));
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--border-focus);
+    transition: border-color .25s ease-in-out 0s;
+}
+
+.container__action-buttons {
+    flex-wrap: wrap;
+}
+
+.container__action-buttons>section {
+    flex: 1;
+}
+
+.container__action-buttons>section>i {
+    display: none;
+}
+
+@media screen and (max-width: 645px) {
+    .container__action-buttons>section {
+        padding: var(--padding-small) !important;
+        min-width: fit-content !important;
+    }
+
+    .container__action-buttons>section>p {
+        display: none;
+    }
+
+    .container__action-buttons>section>i {
+        display: initial;
+    }
+}

@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+@import "../base/constants.css";
+@import "../base/typography.css";
+@import "../components/buttons.css";
+@import "../components/checkbox.css";
+@import "../components/icons.css";
+@import "../components/inputs.css";
+@import "../components/rules.css";
+@import "../layout/account.css";
+@import "../layout/console.css";
+@import "../layout/container.css";
+@import "../layout/list.css";
+@import "../layout/popup.css";
+@import "../layout/snackbar.css";
+
+
+body {
+    max-width: var(--body-section-max-width);
+    margin: 0 auto !important;
+    padding: var(--padding-medium) var(--padding-x-large);
+    gap: var(--padding-xx-large);
+    height: fit-content;
+}
+
+main {
+    margin: auto;
+    gap: var(--padding-x-large);
+}
+
+main>section {
+    width: var(--body-section-width);
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        flex-direction: column !important;
+    }
+
+    main>section {
+        width: 100%;
+    }
+
+    main>hr {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 250px) {
+    body {
+        padding: var(--padding-medium);
+    }
+}

@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+
+.snackbar__container {
+    position: fixed;
+    display: none;
+    height: auto;
+    text-align: center;
+    align-self: center;
+    border-radius: var(--border-radius-small);
+    padding: var(--padding-small) var(--padding-medium);
+    bottom: var(--padding-medium);
+    background: var(--quaternary);
+    gap: var(--padding-medium);
+    z-index: 1;
+}
+
+.snackbar__container.show {
+    display: inline-flex;
+    animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+}
+
+.snackbar__container>p {
+    color: var(--secondary);
+}
+
+@keyframes fadeIn {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: var(--padding-medium);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        bottom: var(--padding-medium);
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}

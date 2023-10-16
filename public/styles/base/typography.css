@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+
+@font-face {
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../../fonts/Material-Icons.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Poppins";
+    font-style: normal;
+    src: url("../../fonts/Poppins.ttf") format("truetype");
+}
+
+h1 {
+    font-weight: var(--font-large);
+    font-size: var(--text-large);
+    color: var(--secondary);
+    margin: unset;
+}
+
+h2 {
+    font-weight: var(--font-medium);
+    font-size: var(--text-large);
+    color: var(--secondary);
+    margin: unset;
+}
+
+h3 {
+    font-weight: var(--font-medium);
+    font-size: var(--text-small);
+    color: var(--secondary);
+    margin: unset;
+}
+
+p,
+span {
+    font-weight: var(--font-small);
+    font-size: var(--text-x-small);
+    color: var(--tertiary);
+    margin: unset;
+    overflow: hidden;
+}
+
+.text__block {
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.field__required::after {
+    content: " *";
+    color: var(--red);
+    display: inline-block;
+    margin-left: var(--padding-x-small);
+}
+
+.container__preview-text {
+    padding: var(--padding-xx-large);
+}
+
+.container__preview-text>p {
+    font-size: var(--text-small);
+    color: var(--secondary);
+    text-align: center;
+}

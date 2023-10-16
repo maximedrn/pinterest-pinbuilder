@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+
+.container__outputs {
+    gap: var(--padding-x-small);
+}
+
+.container__console-title {
+    text-align: center;
+    width: fit-content;
+}
+
+.container__console-title>span {
+    width: 100%;
+}
+
+.container__console-message {
+    justify-content: center;
+    overflow: hidden;
+}
+
+.container__console-message>p,
+.container__console-message>p>a {
+    color: var(--secondary);
+    
+}
+
+.container__console-message>p:last-child {
+    font-size: var(--text-xx-small);
+}

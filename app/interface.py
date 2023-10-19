@@ -15,7 +15,7 @@ Any distribution, modification or commercial use is strictly prohibited.
 from __future__ import annotations
 from multiprocessing import Manager
 from multiprocessing.managers import DictProxy
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable, Dict, List, Tuple, final
 
 from app.common.browse_manager import BrowseManager
 from app.constants.messages import (
@@ -130,6 +130,7 @@ class BaseManager:
             if not process_name else self[process_name]
 
 
+@final
 class Interface(BaseManager):
     """Gateway for communication with methods called by the frontend.
     

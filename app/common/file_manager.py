@@ -20,7 +20,6 @@ from os.path import basename, dirname, exists, join
 from pathlib import Path
 from shutil import copy2
 from typing import Any, Dict, List
-from uuid import uuid4
 
 from app.common.file_reader import FileReader
 from app.common.file_writer import FileWriter
@@ -39,6 +38,9 @@ class FileManager(FileReader):
     --------
         generate_name_for_file() -> str:
             Generate a unique name for a file based on the current datetime.
+            
+        add_index_to_file(file_path: str) -> str:
+            Append an index to a file path to make it unique.
     
         remove_element_from_file(self, index: int) -> None:
             Remove an element from the temporary file.
@@ -74,13 +76,14 @@ class FileManager(FileReader):
             delete_temp_file (bool): Let the process start from scratch
                 with the selected file, or continue where it left off.
         """
-        super().__init__(file_path)
-        __file_folder: str = dirname(self.file_path)
-        __file_name: str = basename(self.file_path)
+        self.__file_path: str = file_path
+        __file_folder: str = dirname(self.__file_path)
+        __file_name: str = basename(self.__file_path)
         self.__temp_folder: str = join(__file_folder, TEMP_FOLDER)
         self.__temp_file: str = join(self.__temp_folder, __file_name)
         self.__remove_element_attempt: int = 0
         self.__create_temporary_file(delete_temp_file)
+        super().__init__(self.__temp_file)
         
     def __create_temporary_file(self, delete_temp_file: bool) -> None:
         """Create a temporary file if it does not exist.
@@ -96,7 +99,7 @@ class FileManager(FileReader):
         Path(self.__temp_folder).mkdir(parents=True, exist_ok=True)
         # Copy the initial file if it is not present in the temporary folder.
         if not exists(self.__temp_file) or delete_temp_file:
-            copy2(self.file_path, self.__temp_file)
+            copy2(self.__file_path, self.__temp_file)
             
     @staticmethod
     def generate_name_for_file() -> str:
@@ -104,17 +107,43 @@ class FileManager(FileReader):
 
         Returns:
         --------
-            str: A unique file name in the format
-                "YYYY-MM-DD_HH-MM-SS_xxxx.json", where "xxxx"
-                represents the first 4 characters of a random UUID.
+            str: A unique file name in the  "YYYY-MM-DD HH-MM-SS.json" format.
 
         Example:
         --------
             >>> FileManager.generate_name_for_file()
-            '2023-09-14_15-30-45_abcd.json'
+            '2023-09-14 15-30-45.json'
         """
         __current_datetime: str = dt.now().strftime(US_DATETIME_FORMAT)
-        return __current_datetime + '_' + str(uuid4())[:4] + '.json'
+        return __current_datetime + '.json'
+    
+    @staticmethod
+    def add_index_to_file(file_path: str) -> str:
+        """Append an index to a file path to make it unique.
+
+        This method takes a file path and appends an index to the file name to
+        ensure that the resulting file path does not already exist. If the
+        original file path exists, it keeps incrementing the index until it
+        finds a unique file path.
+
+        Parameters:
+        -----------
+            file_path (str): The original file path to which an index will
+                be added.
+
+        Returns:
+        --------
+            str: A modified file path with an added index to make it unique.
+        """
+        __file_path: Path = Path(file_path)
+        __folder: Path = __file_path.parent
+        __file_name: str = __file_path.stem + '_{}' + __file_path.suffix
+        index: int = 0  # The index that will be added for the file.
+        while Path(__file_path).exists() and (index := index + 1):
+            __current_file_name: str = __file_name.format(index)
+            __file_path: Path = __folder.joinpath(__current_file_name)
+        return str(__file_path.name)
+        
     
     def remove_element_from_file(self, index: int) -> None:
         """Remove an element from the temporary file.
@@ -128,9 +157,10 @@ class FileManager(FileReader):
             file_reader: FileReader = FileReader(self.__temp_file)
             temp_file_length: int = file_reader.file_length
             temp_file_content: List[Dict[str, Any]] = file_reader.file_content
-            if temp_file_content:  # Prevent an error in case of an
-                temp_file_content.pop(  # empty file.
-                    self.file_length - temp_file_length - index)
+            # Note: `index` increases but the temp file length decrease.
+            # Thus it is required to subtract from `index` the difference
+            # between the file length and the temp file length.
+            temp_file_content.pop(index - self.file_length + temp_file_length)
             FileWriter.write_content(self.__temp_file, temp_file_content)
         except (Exception, TempFileError):
             if self.__remove_element_attempt < 2:

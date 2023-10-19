@@ -14,9 +14,12 @@ Any distribution, modification or commercial use is strictly prohibited.
 
 
 from typing import Any, Dict, Generator, List
+from app.constants.messages import NO_TOPIC_TAGS_FOUND
+from app.constants.processes import CREATE_PROCESS
 from app.services.login.cookie_manager import CookieManager
 from app.services.login.user_manager import UserManager
 from app.services.tags.tags_manager import TagsManager
+from app.utils.logger.snackbar_manager import Snackbar
 
 
 class TagProcess(TagsManager, UserManager):
@@ -97,4 +100,6 @@ class TagProcess(TagsManager, UserManager):
         __tags: List[Dict[str, Any]] = []
         while not __tags and (__uuid := next(__uuids)):
             __tags: List[Dict[str, Any]] = self.__retrieve_tags(__uuid)
+        if not __tags:  # Not tags or no account were added.
+            Snackbar(CREATE_PROCESS).info(NO_TOPIC_TAGS_FOUND)
         return __tags

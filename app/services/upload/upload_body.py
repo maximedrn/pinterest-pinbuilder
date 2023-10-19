@@ -21,10 +21,10 @@ from typing import Any, Dict, List, Tuple
 
 from app.constants.file_settings import (
     ALT_TEXT, DATETIME, DATETIME_FORMAT, DESCRIPTION, IMAGE_PIN_TYPE,
-    LINK, PAID_PIN, PINBOARD, TOPIC_TAGS, TITLE)
+    LINK, PAID_PIN, PINBOARD_ID, TOPIC_TAGS, TITLE)
 from app.constants.request_body import (
     AMAZON_CREDENTIALS_BODY_ORGANIC, AMAZON_CREDENTIALS_BODY_PAID, BLOCKS,
-    BOARD_ID, DATA, ETAG_BODY, ID, IMAGE_PAID_PIN, IMAGE_SIGNATURE,
+    BOARD, BOARD_ID, DATA, ETAG_BODY, ID, IMAGE_PAID_PIN, IMAGE_SIGNATURE,
     IS_UNIFIED_BUILDER, MEDIA_INFO_LIST, MEDIA_INFO_LIST_VALUE, MEDIA_TYPE,
     MEDIA_UPLOAD_ID, METADATA, OPTIONS, ORGANIC_PIN_URL, PAGES, PAID_PIN_URL,
     PIN_CONTENT_ORGANIC_BODY, PIN_CONTENT_PAID_BODY, PIN_IMAGE_SIGNATURE,
@@ -203,7 +203,7 @@ class UploadBody:
         """
         if isinstance(datetime, str) and datetime:
             __datetime: dt = dt.strptime(datetime, DATETIME_FORMAT)
-            return int(round(__datetime.timestamp() * 1000))
+            return int(round(__datetime.timestamp()))
         
     def __pin_content_organic(
             self, content: Dict[str, Any], asset_etag: str,
@@ -236,7 +236,7 @@ class UploadBody:
             pin_content[SOURCE_URL] = PAID_PIN_URL
         # Insert the Pin content into the different parts.
         options[DESCRIPTION] = content[DESCRIPTION]
-        options[BOARD_ID] = content[PINBOARD]
+        options[BOARD_ID] = content[PINBOARD_ID]
         options[LINK] = content[LINK]
         options[SCHEDULED_TIMESTAMP] = self.__convert_to_timestamp(
             content[DATETIME])  # Convert the schedule datetime.
@@ -247,10 +247,13 @@ class UploadBody:
         signature = IMAGE_SIGNATURE if asset_etag == preview_etag \
             else VIDEO_SIGNATURE  # Asset key signature (image or video).
         metadata[PIN_IMAGE_SIGNATURE] = preview_etag
+        options[IMAGE_SIGNATURE] = preview_etag  # Only for schedule.
         blocks[signature] = asset_etag
         # Set the Pin type (2 for image and 3 for video).
         blocks[TYPE] = 2 if asset_etag == preview_etag else 3
         options[STORY_PIN] = dumps(options[STORY_PIN])
+        if not isinstance(content[TOPIC_TAGS], list):
+            content[TOPIC_TAGS] = []
         options[TOPIC_TAGS] = dumps(content[TOPIC_TAGS])
         return pin_content
     
@@ -281,7 +284,8 @@ class UploadBody:
         options[TITLE] = content[TITLE]
         options[DESCRIPTION] = content[DESCRIPTION]
         options[ALT_TEXT] = content[ALT_TEXT]
-        options[BOARD_ID], options[LINK] = content[PINBOARD], content[LINK]
+        options[BOARD_ID] = options[BOARD] = content[PINBOARD_ID] 
+        options[LINK] = content[LINK]
         options[SCHEDULED_TIMESTAMP] = self.__convert_to_timestamp(
             content[DATETIME])  # Convert the schedule datetime.
         # True if the Pin is an image, False if it is a video.

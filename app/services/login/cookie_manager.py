@@ -14,6 +14,7 @@ Any distribution, modification or commercial use is strictly prohibited.
 
 from __future__ import annotations
 from copy import deepcopy
+from genericpath import exists
 from json import dumps, loads
 from time import time
 from typing import Any, Dict, List, Tuple
@@ -120,6 +121,8 @@ class CookieManager:
             List[Dict[str, Any]]: A list of dictionaries containing
                 saved cookies.
         """
+        if not exists(COOKIES_FILE):  # The file containing the cookies
+            return []  # does not exist, it will be created later.
         with open(COOKIES_FILE, 'r', encoding='utf-8') as file:
             return loads(file.read())
         

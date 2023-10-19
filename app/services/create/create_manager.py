@@ -18,7 +18,7 @@ from copy import deepcopy
 from datetime import datetime as dt, timedelta
 from os.path import join
 from re import match
-from typing import Any, Dict, List
+from typing import Any, Dict, Final, List
 
 from app.common.file_manager import FileManager
 from app.common.file_writer import FileWriter
@@ -87,6 +87,8 @@ class CreateManager(FileWriter):
         __loaded_part (int): The index of the currently loaded data chunk.
     """
     
+    SAVE_DELAY: Final[int] = 20  # seconds.
+    
     def __init__(self, assets_folder: str) -> None:
         """Initialize the CreateManager with assets and file-related settings.
 
@@ -94,10 +96,11 @@ class CreateManager(FileWriter):
         -----------
             assets_folder (str): The folder containing asset files.
         """
+        Snackbar(CREATE_PROCESS).clear()  # Cleat the snackbar file.
         self.__pins_data: List[Dict[str, Any]] = \
             AssetsManager.retrieve_assets_file(assets_folder)
-        self.__upload_file: str = join(
-            UPLOAD_FOLDER, FileManager.generate_name_for_file())
+        __file_name: str = FileManager.generate_name_for_file()
+        self.__upload_file: str = join(UPLOAD_FOLDER, __file_name)
         self.__last_time_saved: dt = dt.now()
         self.__chunk_size: int = 32
         self.__loaded_part: int = 0
@@ -231,5 +234,6 @@ class CreateManager(FileWriter):
         If the time elapsed since the last save is greater than 20 seconds,
         the data will be saved to a file.
         """
-        if dt.now() - self.__last_time_saved > timedelta(seconds=20):
+        __time_difference: timedelta = dt.now() - self.__last_time_saved
+        if __time_difference > timedelta(CreateManager.SAVE_DELAY):
             self.save_file()  # Each time the data is updated.

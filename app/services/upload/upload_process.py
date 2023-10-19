@@ -87,7 +87,7 @@ class UploadProcess(DataManager, SaveManager, ThreadManager):
         self.__maximum_attempts: int = maximum_attempts
         self.__cookies: Dict[str, Any] = cookies
         DataManager.__init__(self, file_path, delete_temp_file)
-        SaveManager.__init__(self, self)
+        SaveManager.__init__(self, self, file_path)
         
     def __check_license_key(self) -> bool:
         """Check the validity of the license key.
@@ -106,7 +106,7 @@ class UploadProcess(DataManager, SaveManager, ThreadManager):
             index (int): The index of the item to upload.
         """
         # Load and verify the data according to the index.
-        if not self.verify_content(index):
+        if not self.verify_content(index, self.file_length):
             return  # The data is not correctly formatted.
         content: Dict[str, Any] = self.retrieve_content()
         attempts: int = 0  # Current attempts for the upload.

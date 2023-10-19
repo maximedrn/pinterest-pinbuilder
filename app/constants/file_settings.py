@@ -13,25 +13,26 @@ Any distribution, modification or commercial use is strictly prohibited.
 """
 
 
-from typing import Dict, List
+from typing import Dict, Final, List
 
 
-FILE_PATH: str = 'file_path'
-PINBOARD: str = 'pinboard'
-TITLE: str = 'title'
-DESCRIPTION: str = 'description'
-ALT_TEXT: str = 'alt_text'
-LINK: str = 'link'
-TOPIC_TAGS: str = 'topic_tags'
-DATETIME: str = 'datetime'
-PAID_PIN: str = 'paid_pin'
-COOKIES: str = 'cookies'
-STARTING_VALUE: str = 'starting_value'
-MAXIMUM_ATTEMPTS: str = 'maximum_attempts'
-DELETE_TEMP_FILE: str = 'delete_temp_file'
+FILE_PATH: Final[str] = 'file_path'
+PINBOARD: Final[str] = 'pinboard'
+PINBOARD_ID: Final[str] = 'pinboard_id'
+TITLE: Final[str] = 'title'
+DESCRIPTION: Final[str] = 'description'
+ALT_TEXT: Final[str] = 'alt_text'
+LINK: Final[str] = 'link'
+TOPIC_TAGS: Final[str] = 'topic_tags'
+DATETIME: Final[str] = 'datetime'
+PAID_PIN: Final[str] = 'paid_pin'
+COOKIES: Final[str] = 'cookies'
+STARTING_VALUE: Final[str] = 'starting_value'
+MAXIMUM_ATTEMPTS: Final[str] = 'maximum_attempts'
+DELETE_TEMP_FILE: Final[str] = 'delete_temp_file'
 
 # JSON keys used for each element.
-UPLOAD_DATA: List[str] = [
+UPLOAD_DATA: Final[List[str]] = [
     PAID_PIN,
     FILE_PATH,
     PINBOARD,
@@ -43,33 +44,33 @@ UPLOAD_DATA: List[str] = [
     DATETIME
 ]
 
-TOPIC_TAGS_ID: str = 'id'
-TOPIC_TAGS_VALUE: str = 'value'
+TOPIC_TAGS_ID: Final[str] = 'id'
+TOPIC_TAGS_VALUE: Final[str] = 'value'
 TOPIC_TAGS_TAG_VALUE = 'tagValue'
-TOPIC_TAGS_KEYS: List[str] = [
+TOPIC_TAGS_KEYS: Final[List[str]] = [
     TOPIC_TAGS_ID,
     TOPIC_TAGS_VALUE,
     TOPIC_TAGS_TAG_VALUE
 ]
 
 # Constraints for certain keys used for elements.
-DATA_LENGTH: Dict[str, int] = {
+DATA_LENGTH: Final[Dict[str, int]] = {
     TITLE: 100,
     DESCRIPTION: 500,
     ALT_TEXT: 500
 }
-LINK_DEFAULT_VALUE: str = 'https://'
-ORGANIC_PIN: str = 'organic_pin'  # Paid pin already exists.
+LINK_DEFAULT_VALUE: Final[str] = 'https://'
+ORGANIC_PIN: Final[str] = 'organic_pin'  # Paid pin already exists.
 
 # Datetime format for `datetime.datetime` and `re`.
-US_DATETIME_FORMAT: str = '%Y-%m-%d_%H-%M'  # File name.
-DATETIME_FORMAT: str = '%d-%m-%Y %H:%M'
-JS_DATETIME_FORMAT: str = '%d/%m/%Y %H:%M'
-DATETIME_FORMAT_REGEX: str = r'\d{2}-\d{2}-\d{4} \d{2}:\d{2}'
-JS_DATETIME_FORMAT_REGEX: str = r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}'
+US_DATETIME_FORMAT: Final[str] = '%Y-%m-%d %H-%M-%S'  # File name.
+DATETIME_FORMAT: Final[str] = '%d/%m/%Y %H:%M'
+JS_DATETIME_FORMAT: Final[str] = '%d/%m/%Y %H:%M'
+DATETIME_FORMAT_REGEX: Final[str] = r'\d{2}/\d{2}/\d{4} \d{2}:\d{2}'
+JS_DATETIME_FORMAT_REGEX: Final[str] = r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}'
 
-IMAGE_TYPE: str = 'image'
-VIDEO_TYPE: str = 'video'
-IMAGE_PIN_TYPE: str = IMAGE_TYPE + '-story-pin'
-VIDEO_PIN_TYPE: str = VIDEO_TYPE + '-story-pin'
-PREVIEW_MAX_WIDTH: int = 256
+IMAGE_TYPE: Final[str] = 'image'
+VIDEO_TYPE: Final[str] = 'video'
+IMAGE_PIN_TYPE: Final[str] = IMAGE_TYPE + '-story-pin'
+VIDEO_PIN_TYPE: Final[str] = VIDEO_TYPE + '-story-pin'
+PREVIEW_MAX_WIDTH: Final[int] = 256

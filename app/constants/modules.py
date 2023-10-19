@@ -13,26 +13,25 @@ Any distribution, modification or commercial use is strictly prohibited.
 
 
 from __future__ import annotations
-from typing import Dict, Tuple
+from typing import Dict, Final, Tuple
 
 
 # Requirements for the PyQt6 module.
-PYQT6: Dict[str, Tuple[str, str] | Tuple] = {
+PYQT6: Final[Dict[str, Tuple[str, str] | Tuple]] = {
     'Windows': ('10', '11'),
     'Linux': (),
     'Darwin': ()
 }
 
 # Requirements for the PyQt5 module.
-PYQT5: Dict[str, Tuple[str, ...]] = {
+PYQT5: Final[Dict[str, Tuple[str, ...]]] = {
     'Windows': ('XP', 'Vista', '7', '8', '8.1')
 }
 
 # Required modules: {version: (prerequisites, version)}.
-MODULES_LIST: Dict[str, Tuple[
-        Dict[str, Tuple[str, str] | Tuple] |
-        Dict[str, Tuple[str, ...]] |
-        None, str | None]] = {
+MODULES_LIST: Final[
+        Dict[str, Tuple[Dict[str, Tuple[str, str] | Tuple] |
+        Dict[str, Tuple[str, ...]] | None, str | None]]] = {
     'colorama': (None, '0.4.5'),
     'selenium': (None, '4.7.2'),
     'webdriver-manager': (None, '4.0.0'),
@@ -60,6 +59,6 @@ MODULES_LIST: Dict[str, Tuple[
 }
 
 # Formats used to install modules.
-MODULE_INSTALL_FORMAT: str = '{module}=={version}'
-MODULE_INSTALL_COMMAND: str = \
+MODULE_INSTALL_FORMAT: Final[str] = '{module}=={version}'
+MODULE_INSTALL_COMMAND: Final[str] = \
     '"{python}" -m pip install {modules} --force-reinstall'

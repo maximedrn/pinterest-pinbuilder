@@ -13,13 +13,13 @@ Any distribution, modification or commercial use is strictly prohibited.
 """
 
 
-from typing import List
+from typing import Final, List
 
 from app.constants.paths import FRONTEND_FOLDER, LOG_FOLDER
 
 
 # Various directories and files to be deleted before updating the tool.
-PATHS_TO_REMOVE: List[str] = [
+PATHS_TO_REMOVE: Final[List[str]] = [
     '__pycache__',
     'app',
     FRONTEND_FOLDER,
@@ -40,6 +40,6 @@ __repository_name: str = 'pinterest-pinbuilder-backend'
 __backend_url: str = __gitfront_url.format(
     __gitfront_account_name, __repository_id, __repository_name)
 
-VERSION_URL: str = __backend_url + 'version.txt'
-CHANGELOG_URL: str = __backend_url + 'changelog.txt'
-UPDATE_URL: str = __backend_url + 'pinterest-pinbuilder.zip'
+VERSION_URL: Final[str] = __backend_url + 'version.txt'
+CHANGELOG_URL: Final[str] = __backend_url + 'changelog.txt'
+UPDATE_URL: Final[str] = __backend_url + 'pinterest-pinbuilder.zip'

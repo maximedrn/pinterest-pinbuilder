@@ -14,24 +14,30 @@ Any distribution, modification or commercial use is strictly prohibited.
 
 
 from __future__ import annotations
+from copy import deepcopy
 from io import BytesIO
 from typing import Any, Dict, List, Tuple
-from typing_extensions import deprecated
 from uuid import uuid4
 
+from eel import sleep
+
 from app.constants.file_settings import (
-    FILE_PATH, IMAGE_PIN_TYPE, PAID_PIN, PINBOARD, TITLE, VIDEO_PIN_TYPE)
+    DATETIME, FILE_PATH, IMAGE_PIN_TYPE, PAID_PIN, PINBOARD,
+    PINBOARD_ID, TITLE, VIDEO_PIN_TYPE)
 from app.constants.messages import (
-    AMAZON_CREDENTIALS_ERROR, ETAG_ERROR, PIN_CONTENT_ERROR, PIN_UPLOAD,
-    PIN_UPLOAD_ERROR, PIN_UPLOAD_RUNNING, PIN_UPLOAD_SUCCESS, PIN_UPLOAD_URL,
-    PINBOARD_ID_ERROR, PINBOARDS_ERROR)
+    AMAZON_CREDENTIALS_ERROR, ETAG_ERROR, PIN, PIN_CONTENT_ERROR,
+    PIN_SCHEDULE, PIN_SCHEDULED, PIN_UPLOAD, PIN_UPLOAD_ERROR,
+    PIN_UPLOAD_URL, PIN_UPLOADED, PINBOARD_ID_ERROR, PINBOARDS_ERROR,
+    RATE_LIMITED)
 from app.constants.processes import UPLOAD_PROCESS
 from app.constants.request_body import DATA, FILE, ID
 from app.constants.webdriver import (
-    PINTEREST_AMAZON_ORGANIC_URL, PINTEREST_AMAZON_PAID_URL,
-    PINTEREST_ETAG_URL, PINTEREST_IMAGE_UPLOAD_URL,
-    PINTEREST_MEDIA_UPLOAD_URL, PINTEREST_PIN_CONTENT_ORGANIC_URL,
-    PINTEREST_PIN_CONTENT_PAID_URL, PINTEREST_PINBOARD_ID_URL,
+    ERROR, MESSAGE_DETAIL, PINTEREST_AMAZON_ORGANIC_URL,
+    PINTEREST_AMAZON_PAID_URL, PINTEREST_ETAG_URL,
+    PINTEREST_IMAGE_UPLOAD_URL, PINTEREST_MEDIA_UPLOAD_URL,
+    PINTEREST_PIN_CONTENT_ORGANIC_URL, PINTEREST_PIN_CONTENT_PAID_URL,
+    PINTEREST_PIN_CONTENT_SCHEDULED_ORGANIC_URL,
+    PINTEREST_PIN_CONTENT_SCHEDULED_PAID_URL, PINTEREST_PINBOARD_ID_URL,
     UPLOAD_ID, UPLOAD_PARAMETERS)
 from app.services.create.assets_manager import AssetsManager
 from app.services.login.cookie_manager import CookieManager
@@ -103,12 +109,14 @@ class UploadManager(RequestManager, UploadBody):
 
         __get_pinboard_id(self) -> str:
             Get the ID of the target Pinboard.
+            
+        __get_pin_content_url(self) -> str:
+            Get the URL for pin content creation based on content.
 
         __post_pin_content(
                 self, asset_etag: str, preview_etag: str) -> Dict[str, Any]:
             Post Pin content to Pinterest.
         
-        @deprecated('Not in use.')
         __get_title_extract(self) -> str | None:
             Get an extract of the Pin title to display.
 
@@ -136,7 +144,8 @@ class UploadManager(RequestManager, UploadBody):
             cookies (Dict[str, Any]): A dictionary containing cookies for
                 the upload session.
         """
-        self.__content: Dict[str, Any] = content
+        self.__rate_limit: int = 10  # minutes.
+        self.__content: Dict[str, Any] = deepcopy(content)
         self.__paid_pin: bool = self.__content[PAID_PIN]
         self.__file_path: str = self.__content[FILE_PATH]
         self.__uuids: Tuple[str, str] = self.__create_uuids()
@@ -370,6 +379,25 @@ class UploadManager(RequestManager, UploadBody):
                 return pinboard['id']  # Retrieve the Pinboard ID.
         raise RequestError(PINBOARD_ID_ERROR)
     
+    def __get_pin_content_url(self) -> str:
+        """Get the URL for pin content creation based on content.
+
+        This method returns the URL for pin content creation based on the
+        content type and whether it is a paid or organic pin. The URL is
+        also determined by the presence of a scheduled date.
+
+        Returns:
+        --------
+            str: The URL for pin content creation.
+        """
+        if self.__content[DATETIME] and self.__paid_pin:
+            return PINTEREST_PIN_CONTENT_SCHEDULED_PAID_URL
+        if self.__content[DATETIME] and not self.__paid_pin:
+            return PINTEREST_PIN_CONTENT_SCHEDULED_ORGANIC_URL
+        if not self.__content[DATETIME] and self.__paid_pin:
+            return PINTEREST_PIN_CONTENT_PAID_URL
+        return PINTEREST_PIN_CONTENT_ORGANIC_URL
+    
     def __post_pin_content(
             self, asset_etag: str, preview_etag: str) -> Dict[str, Any]:
         """Post Pin content to Pinterest.
@@ -386,11 +414,17 @@ class UploadManager(RequestManager, UploadBody):
         """
         __body: Dict[str, Any] = self.get_pin_content_body(
             self.__content, asset_etag, preview_etag, self.__paid_pin)
-        __url: str = PINTEREST_PIN_CONTENT_PAID_URL \
-            if self.__paid_pin else PINTEREST_PIN_CONTENT_ORGANIC_URL
+        __url: str = self.__get_pin_content_url()
         __response: Dict[str, Any] = self.post(__url, parameters=__body)
-        self.request_error(__response, PIN_CONTENT_ERROR)
-        return __response
+        if not self._is_rate_limited(__response):
+            self.request_error(__response, PIN_CONTENT_ERROR)
+            return __response
+        for remaining_time in range(self.__rate_limit, -1, -1):
+            __waiting_info: str = RATE_LIMITED.format(remaining_time + 1)
+            __error: str = __response[ERROR][MESSAGE_DETAIL]
+            self.__console.info(__waiting_info, __error)
+            sleep(60)  # Wait 1 minute before refreshing log.
+        return self.__post_pin_content(asset_etag, preview_etag)
     
     def __start_upload(self) -> str:
         """Execute the upload process, including obtaining credentials,
@@ -407,12 +441,11 @@ class UploadManager(RequestManager, UploadBody):
                 __asset_etag: str = self.__get_asset_upload_id() 
         # Retrieve the Pinboard ID and post and Pin content.
         if PINBOARD in self.__content and self.__content[PINBOARD]:
-            self.__content[PINBOARD] = self.__get_pinboard_id()
+            self.__content[PINBOARD_ID] = self.__get_pinboard_id()
         __response: Dict[str, Any] = self.__post_pin_content(  # Post the
             __asset_etag, __preview_etag)  # content of the Pin with ETags.
         return __response[DATA][ID]
     
-    @deprecated('Not in use.')
     def __get_title_extract(self) -> str | None:
         """Get an extract of the Pin title to display.
         
@@ -420,7 +453,7 @@ class UploadManager(RequestManager, UploadBody):
         --------
             str | None: The extract of the title.
         """
-        __title_length: int = 10
+        __title_length: int = 50
         __title: str | None = self.__content[TITLE]
         if __title and len(__title) > __title_length:
             return __title[:__title_length] + '...'
@@ -432,15 +465,18 @@ class UploadManager(RequestManager, UploadBody):
         Parameters:
         -----------
             index (int): The index of the current Pin.
+            file_length (int): The selected file length.
         """
         try:  # Try uploading the Pin while handling the error.
-            # __display_title: str | None = self.__get_title_extract()
-            self.__console.set_title(
-                PIN_UPLOAD.format(index + 1, file_length))
-            self.__console.message(PIN_UPLOAD_RUNNING)
+            __schedule: bool = bool(self.__content[DATETIME])
+            self.__console.set_title(PIN.format(index + 1, file_length))
+            __title: str = PIN_SCHEDULE if __schedule else PIN_UPLOAD
+            __display_title: str | None = self.__get_title_extract()
+            self.__console.message(__title, __display_title)
             __pin_id: str = self.__start_upload()  # Upload the selected Pin.
-            self.__console.success(
-                PIN_UPLOAD_SUCCESS, PIN_UPLOAD_URL.format(id=__pin_id))
+            __message: str = PIN_SCHEDULED if __schedule else PIN_UPLOADED
+            __url: str = PIN_UPLOAD_URL.format(id=__pin_id)
+            self.__console.success(__message, __url)
             return True  # The upload has been completed.
         except (Exception, RequestError):
             self.__console.error(PIN_UPLOAD_ERROR)

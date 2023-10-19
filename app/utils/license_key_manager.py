@@ -49,22 +49,12 @@ class LicenseKeyManager:
 
     Private methods:
     ----------------
-        __create_license_key_file() -> None:
-            Create the license key file if it does not exist.
-
         __load_api_response(response_text: str) -> Dict[str, Any]:
             Parse the API response text and return it as a dictionary.
 
         __check_license_key(license_key: str, api_url: str) -> bool:
             Check the license key against the specified API URL.
     """
-    
-    @staticmethod
-    def __create_license_key_file() -> None:
-        """Create the license key file if it does not exist."""
-        if not exists(LICENSE_KEY_FILE):
-            with open(LICENSE_KEY_FILE, 'w+', encoding='utf-8') as file:
-                file.close()
 
     @staticmethod
     def save_license_key(license_key: str) -> None:
@@ -74,7 +64,6 @@ class LicenseKeyManager:
         -----------
             license_key (str): The license key to save.
         """
-        LicenseKeyManager.__create_license_key_file()
         with open(LICENSE_KEY_FILE, 'w+', encoding='utf-8') as file:
             file.write(dumps({LICENSE_KEY: license_key}, indent=4))
 
@@ -86,7 +75,8 @@ class LicenseKeyManager:
         --------
             str: The retrieved license key.
         """
-        LicenseKeyManager.__create_license_key_file()
+        if not exists(LICENSE_KEY_FILE):  # The file containing the license
+            return ''  # key does not exist, it will be created later.
         with open(LICENSE_KEY_FILE, 'r', encoding='utf-8') as file:
             return loads(file.read())[LICENSE_KEY]
         

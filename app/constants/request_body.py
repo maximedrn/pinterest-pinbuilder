@@ -13,28 +13,28 @@ Any distribution, modification or commercial use is strictly prohibited.
 """
 
 
-from typing import Any, Dict, List
+from typing import Any, Dict, Final, List
 
 from app.constants.file_settings import (
     ALT_TEXT, DESCRIPTION, LINK, TOPIC_TAGS)
 
 
 # Default keys of the request bodies.
-SOURCE_URL: str = 'source_url'
-DATA: str = 'data'
-OPTIONS: str = 'options'
-URL: str = 'url'
+SOURCE_URL: Final[str] = 'source_url'
+DATA: Final[str] = 'data'
+OPTIONS: Final[str] = 'options'
+URL: Final[str] = 'url'
 
 # Current sub-paths used by Pinterest.
-ORGANIC_PIN_URL: str = '/pin-creation-tool/'
-PAID_PIN_URL: str = '/pin-builder/'
-AMAZON_UPLOAD_URL: str = '/v3/media/uploads/register/batch/'
-TAGS_URL: str = '/v3/manual_tags/search/'
+ORGANIC_PIN_URL: Final[str] = '/pin-creation-tool/'
+PAID_PIN_URL: Final[str] = '/pin-builder/'
+AMAZON_UPLOAD_URL: Final[str] = '/v3/media/uploads/register/batch/'
+TAGS_URL: Final[str] = '/v3/manual_tags/search/'
 
 # User data (name and profile picture) request.
-SESSION_ACCOUNTS: str = 'session_accounts'
+SESSION_ACCOUNTS: Final[str] = 'session_accounts'
 
-USER_DATA_BODY: Dict[str, Any] = {
+USER_DATA_BODY: Final[Dict[str, Any]] = {
     SOURCE_URL: ORGANIC_PIN_URL,
     DATA: {
         OPTIONS: {
@@ -45,15 +45,15 @@ USER_DATA_BODY: Dict[str, Any] = {
 
 
 # Tags request.
-LANGUAGE: str = 'language'
-DEFAULT_LANGUAGE: str = 'en'
-QUERY: str = 'query'
-CORPUS: str = 'corpus'
-CORPUS_VALUE: str = 'interests'
-LIMIT: str = 'limit'
-MIN_LEVEL: str = 'min_level'
+LANGUAGE: Final[str] = 'language'
+DEFAULT_LANGUAGE: Final[str] = 'en'
+QUERY: Final[str] = 'query'
+CORPUS: Final[str] = 'corpus'
+CORPUS_VALUE: Final[str] = 'interests'
+LIMIT: Final[str] = 'limit'
+MIN_LEVEL: Final[str] = 'min_level'
 
-TAGS_BODY: Dict[str, Any] = {
+TAGS_BODY: Final[Dict[str, Any]] = {
     SOURCE_URL: ORGANIC_PIN_URL,
     DATA: {
         OPTIONS: {
@@ -71,18 +71,18 @@ TAGS_BODY: Dict[str, Any] = {
 
 
 # Amazon credentials request for organic Pin.
-FILE: str = 'file'
-ID: str = 'id'
-MEDIA_INFO_LIST: str = 'media_info_list'
-MEDIA_TYPE: str = 'media_type'
+FILE: Final[str] = 'file'
+ID: Final[str] = 'id'
+MEDIA_INFO_LIST: Final[str] = 'media_info_list'
+MEDIA_TYPE: Final[str] = 'media_type'
 
-MEDIA_INFO_LIST_VALUE: List[Dict[str, Any]] = [
+MEDIA_INFO_LIST_VALUE: Final[List[Dict[str, Any]]] = [
     {ID: None, MEDIA_TYPE: None},
     {ID: None, MEDIA_TYPE: None}
 ]
 
 
-AMAZON_CREDENTIALS_BODY_ORGANIC: Dict[str, Any] = {
+AMAZON_CREDENTIALS_BODY_ORGANIC: Final[Dict[str, Any]] = {
     SOURCE_URL: ORGANIC_PIN_URL,
     DATA: {
         OPTIONS: {
@@ -93,11 +93,11 @@ AMAZON_CREDENTIALS_BODY_ORGANIC: Dict[str, Any] = {
 }
 
 # Amazon credentials request for paid Pin.
-TYPE: str = 'type'
-IMAGE_PAID_PIN: str = 'pinimage'
-VIDEO_PAID_PIN: str = 'video'
+TYPE: Final[str] = 'type'
+IMAGE_PAID_PIN: Final[str] = 'pinimage'
+VIDEO_PAID_PIN: Final[str] = 'video'
 
-AMAZON_CREDENTIALS_BODY_PAID: Dict[str, Any] = {
+AMAZON_CREDENTIALS_BODY_PAID: Final[Dict[str, Any]] = {
     SOURCE_URL: PAID_PIN_URL,
     DATA: {
         OPTIONS: {
@@ -108,9 +108,9 @@ AMAZON_CREDENTIALS_BODY_PAID: Dict[str, Any] = {
 
 
 # ETag request.
-UPLOAD_IDS: str = 'upload_ids'
+UPLOAD_IDS: Final[str] = 'upload_ids'
 
-ETAG_BODY: Dict[str, Any] = {
+ETAG_BODY: Final[Dict[str, Any]] = {
     SOURCE_URL: None,
     DATA: {
         OPTIONS: {
@@ -121,12 +121,12 @@ ETAG_BODY: Dict[str, Any] = {
 
 
 # Pinboard ID request.
-FIELD_SET_KEY: str = 'field_set_key'
-FIELD_SET_KEY_VALUE: str = 'board_picker'
-FILTER: str = 'filter'
-FILTER_VALUE: str = 'all'
+FIELD_SET_KEY: Final[str] = 'field_set_key'
+FIELD_SET_KEY_VALUE: Final[str] = 'board_picker'
+FILTER: Final[str] = 'filter'
+FILTER_VALUE: Final[str] = 'all'
 
-PINBOARD_ID_BODY: Dict[str, Any] = {
+PINBOARD_ID_BODY: Final[Dict[str, Any]] = {
     SOURCE_URL: ORGANIC_PIN_URL,
     DATA: {
         OPTIONS: {
@@ -137,32 +137,32 @@ PINBOARD_ID_BODY: Dict[str, Any] = {
 }
 
 # Pin content request.
-BOARD_ID: str = 'board_id'
-SCHEDULED_TIMESTAMP: str = 'scheduled_timestamp'
-ALLOW_SHOPPING: str = 'allow_shopping_rec'
-IS_COMMENTS_ALLOWED: str = 'is_comments_allowed'
-IS_UNIFIED_BUILDER: str = 'is_unified_builder'
-IS_REMOVABLE: str = 'is_removable'
-STORY_PIN: str = 'story_pin'
-METADATA: str = 'metadata'
-PIN_TITLE: str = 'pin_title'
-PIN_IMAGE_SIGNATURE: str = 'pin_image_signature'
-IMAGE_SIGNATURE: str = 'image_signature'
-VIDEO_SIGNATURE: str = 'video_signature'
-PAGES: str = 'pages'
-BLOCKS: str = 'blocks'
-BLOCK_STYLE: str = 'block_style'
-TYPE: str = 'type'
-LAYOUT: str = 'layout'
+BOARD_ID: Final[str] = 'board_id'
+BOARD: Final[str] = 'board'
+SCHEDULED_TIMESTAMP: Final[str] = 'scheduled_timestamp'
+ALLOW_SHOPPING: Final[str] = 'allow_shopping_rec'
+IS_COMMENTS_ALLOWED: Final[str] = 'is_comments_allowed'
+IS_UNIFIED_BUILDER: Final[str] = 'is_unified_builder'
+IS_REMOVABLE: Final[str] = 'is_removable'
+STORY_PIN: Final[str] = 'story_pin'
+METADATA: Final[str] = 'metadata'
+PIN_TITLE: Final[str] = 'pin_title'
+PIN_IMAGE_SIGNATURE: Final[str] = 'pin_image_signature'
+IMAGE_SIGNATURE: Final[str] = 'image_signature'
+VIDEO_SIGNATURE: Final[str] = 'video_signature'
+PAGES: Final[str] = 'pages'
+BLOCKS: Final[str] = 'blocks'
+BLOCK_STYLE: Final[str] = 'block_style'
+LAYOUT: Final[str] = 'layout'
 
-BLOCK_STYLE_VALUE: Dict[str, int] = {
+BLOCK_STYLE_VALUE: Final[Dict[str, int]] = {
     'height': 100,
     'width': 100,
     'x_coord': 0,
     'y_coord': 0
 }
 
-PIN_CONTENT_ORGANIC_BODY: Dict[str, Any] = {
+PIN_CONTENT_ORGANIC_BODY: Final[Dict[str, Any]] = {
     SOURCE_URL: ORGANIC_PIN_URL,
     DATA: {
         OPTIONS: {
@@ -192,10 +192,10 @@ PIN_CONTENT_ORGANIC_BODY: Dict[str, Any] = {
 }
 
 
-TITLE: str = 'title'
-MEDIA_UPLOAD_ID: str = 'media_upload_id'
+TITLE: Final[str] = 'title'
+MEDIA_UPLOAD_ID: Final[str] = 'media_upload_id'
 
-PIN_CONTENT_PAID_BODY: Dict[str, Any] = {
+PIN_CONTENT_PAID_BODY: Final[Dict[str, Any]] = {
     SOURCE_URL: PAID_PIN_URL,
     DATA: {
         OPTIONS: {
@@ -203,6 +203,7 @@ PIN_CONTENT_PAID_BODY: Dict[str, Any] = {
             DESCRIPTION: None,
             ALT_TEXT: None,
             BOARD_ID: None,
+            BOARD: None,
             LINK: None,
             IMAGE_SIGNATURE: None
         }

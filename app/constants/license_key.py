@@ -13,19 +13,21 @@ Any distribution, modification or commercial use is strictly prohibited.
 """
 
 
+from typing import Final
+
 from app.constants.product_id import PRODUCT_ID
 
 
 # URL of the API for license key verification.
-GUMROAD_API_LICENSE_URL: str = 'http://api.gumroad.com/v2/licenses/verify' + \
-    '?product_id=' + str(PRODUCT_ID)
+GUMROAD_API_LICENSE_URL: Final[str] = (
+    'http://api.gumroad.com/v2/licenses/verify?product_id=' + str(PRODUCT_ID))
 
 # Derived from the API URL for verification purposes.
-LICENSE_KEY_COUNTER: str = GUMROAD_API_LICENSE_URL  + '&license_key={}'
-LICENSE_KEY_VALIDITY: str = GUMROAD_API_LICENSE_URL + \
-    '&increment_uses_count=false&license_key={}'
+LICENSE_KEY_COUNTER: Final[str] = GUMROAD_API_LICENSE_URL  + '&license_key={}'
+LICENSE_KEY_VALIDITY: Final[str] = (
+    GUMROAD_API_LICENSE_URL + '&increment_uses_count=false&license_key={}')
 
-LICENSE_KEY: str = 'license_key'
+LICENSE_KEY: Final[str] = 'license_key'
 
 # The regular expression for the license key format.
-LICENSE_KEY_REGEX: str = r'^((.{8})\-(.{8})\-(.{8})\-(.{8}))$'
+LICENSE_KEY_REGEX: Final[str] = r'^((.{8})\-(.{8})\-(.{8})\-(.{8}))$'

@@ -13,9 +13,12 @@ Any distribution, modification or commercial use is strictly prohibited.
 """
 
 
-# Frontend screen size.
-MAX_WIDTH: int = 1120
-MAX_HEIGHT: int = 760
+from typing import Final
 
-WIDTH_MULTIPLICATOR: float = 1.0
-HEIGHT_MULTIPLICATOR: float = 1.05
+
+# Frontend screen size.
+MAX_WIDTH: Final[int] = 1120
+MAX_HEIGHT: Final[int] = 760
+
+WIDTH_MULTIPLICATOR: Final[float] = 1.0
+HEIGHT_MULTIPLICATOR: Final[float] = 1.05

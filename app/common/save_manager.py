@@ -48,22 +48,21 @@ class SaveManager:
     Attributes:
     -----------
         __file_name (str): The name of the save file.
-        __console (Console): The `Console` instance for logs.
         data_manager (DataManager): An instance of DataManager
             to retrieve data from.
     """
     
-    def __init__(self, data_manager: DataManager) -> None:
+    def __init__(self, data_manager: DataManager, file_path: str) -> None:
         """Initialize a SaveManager instance with the specified DataManager.
 
         Parameters:
         -----------
             data_manager (DataManager): An instance of DataManager
                 to retrieve data from.
+            file_path (str): The path to the file containing data to upload.
         """
-        self.__file_name: str = FileManager.generate_name_for_file()
+        self.__file_name: str = FileManager.add_index_to_file(file_path)
         self.data_manager: DataManager = data_manager
-        self.__console: Console = Console(UPLOAD_PROCESS, SAVE)
         
     def __create_save_file(self, data_folder: str) -> None:
         """Create a new save file in the specified data folder.
@@ -87,6 +86,7 @@ class SaveManager:
                 the save file is located.
             data_keys (List[str]): The keys of the data to save.
         """
+        self.__console: Console = Console(UPLOAD_PROCESS, SAVE)
         try:  # Attempt to save the current data in the backup file.
             self.__create_save_file(data_folder)
             __save_file: str = join(data_folder, self.__file_name)

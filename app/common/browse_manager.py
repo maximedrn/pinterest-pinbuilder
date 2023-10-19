@@ -16,6 +16,7 @@ Any distribution, modification or commercial use is strictly prohibited.
 from __future__ import annotations
 from os import DirEntry, getcwd, listdir, scandir
 from os.path import isfile, join
+from pathlib import Path
 from typing import List, Tuple
 
 from app.constants.messages import (
@@ -144,5 +145,6 @@ class BrowseManager:
         --------
             List[str]: A list of paths to JSON files in the specified folder.
         """
+        Path(UPLOAD_FOLDER).mkdir(parents=True, exist_ok=True)
         return BrowseManager.retrieve_files_from_folder(
             UPLOAD_FOLDER, '.json')

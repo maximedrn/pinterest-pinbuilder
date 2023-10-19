@@ -13,6 +13,9 @@ Any distribution, modification or commercial use is strictly prohibited.
 """
 
 
+from typing import Final
+
+
 # Product identifier used to authenticate each request
 # made to the Gumroad API.
-PRODUCT_ID: str = 'FwBaCxh0zJY16J3vmRfNUQ=='
+PRODUCT_ID: Final[str] = 'FwBaCxh0zJY16J3vmRfNUQ=='

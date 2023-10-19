@@ -25,8 +25,8 @@ from requests import post, Response
 from app.constants.messages import REQUEST_ERROR
 from app.constants.request_body import DATA, SOURCE_URL
 from app.constants.webdriver import (
-    CONTENT_TYPE, ERROR, JSON_FORMAT, PINTEREST_CLIENT_CONTEXT,
-    PINTEREST_RESOURCE_RESPONSE, STATUS, SUCCESS)
+    CODE, CONTENT_TYPE, ERROR, JSON_FORMAT, MESSAGE, MESSAGE_DETAIL,
+    PINTEREST_CLIENT_CONTEXT, PINTEREST_RESOURCE_RESPONSE, STATUS, SUCCESS)
 from app.utils.exceptions import RequestError
 
 
@@ -55,9 +55,17 @@ class RequestManager:
         request_error(
                 self, response: Dict[str, Any], error_message: str) -> None:
             Handle errors in upload requests by checking the response status.
-            
+
+    Protected methods:
+    ------------------
+        _is_rate_limited(self, response: Dict[str, Any]) -> bool:
+            Check if an API response indicates rate limiting.
+
     Private methods:
     ----------------
+        __format_error(self, error: Dict[str, Any]) -> Dict[str, Any]:
+            Format an error response into a standardized format.
+    
         @deprecated('Not in use because cookies are not in string format.')
         __convert_cookies(self, cookies: str) -> Dict[str, Any]:
             Convert cookies in raw format into a compatible dictionary.
@@ -164,7 +172,7 @@ class RequestManager:
                 the `self.get_request_body()` method. Defaults to None.
             parameters (Dict[str, Any] | None, optional): The content sent has
                 a query string. Defaults to None.
-            files (Dict[str, bytes | BytesIO] | None , optional): The content
+            files (Dict[str, bytes | BytesIO] | None, optional): The content
                 sent for the upload of a file. Defaults to None.
             resource_response (bool, optional): Determine whether only
                 the resource response is required or not, Defaults to True.
@@ -178,14 +186,70 @@ class RequestManager:
         response: Response = post(  # Post the request.
             __url, headers=self.__headers, cookies=self.__cookies,
             data=body, files=files, json=parameters)
-        if not (response.ok or 200 <= response.status_code < 300):
-            return {ERROR: REQUEST_ERROR}
-        if JSON_FORMAT in str(response.headers.get(CONTENT_TYPE)):
-            if resource_response:  # Only the resource response.
-                return response.json()[PINTEREST_RESOURCE_RESPONSE]
-            return response.json()[PINTEREST_CLIENT_CONTEXT]
-        return {STATUS: SUCCESS}
+        return self.format_response(response, resource_response)
     
+    def format_response(self, response: Response,
+                        resource_response: bool) -> Dict[str, Any]:
+        """Format the HTTP response into a structured dictionary.
+
+        This method takes an HTTP response object and formats it into a
+        structured dictionary, which may include user information or error
+        messages. It also checks the HTTP status and content type to determine
+        success or failure.
+
+        - If the response is not a JSON, it returns a default error
+          message if the request failed, or a success message if the request
+          was successful.
+        - If `resource_response` is False, only user information is extracted.
+        - If `resource_response` is True, it may include error messages if the
+          request was not successful.
+
+        Parameters:
+        -----------
+            response (Response): The HTTP response object to be formatted.
+            resource_response (bool): A flag indicating whether to extract
+                resource response information.
+
+        Returns:
+        --------
+            Dict[str, Any]: A dictionary containing structured response data.
+            The contents of the dictionary may include user information or
+            error messages.
+        """
+        __ok: bool = response.ok and 200 <= response.status_code < 300
+        __json: bool = JSON_FORMAT in str(response.headers.get(CONTENT_TYPE))
+        if not __json:  # The response from the server is not a JSON.
+            if not __ok:  # The request failed, return the default error.
+                return {ERROR: REQUEST_ERROR}
+            return {STATUS: SUCCESS}  # Success but no response.
+        __content: Dict[str, Any] = response.json()
+        if not resource_response:  # Only need the user information.
+            return __content[PINTEREST_CLIENT_CONTEXT]
+        __resource: Dict[str, Any] = __content[PINTEREST_RESOURCE_RESPONSE]
+        if not __ok:  # Retrieve, format and return the error.
+            return self.__format_error(__resource[ERROR])
+        return __resource
+    
+    def __format_error(self, error: Dict[str, Any]) -> Dict[str, Any]:
+        """Format an error response into a standardized format.
+
+        This method takes an error dictionary from an API response and formats
+        it into a standardized error format, including the error message and
+        error code.
+
+        Parameters:
+        -----------
+            error (Dict[str, Any]): The error dictionary from an API response.
+
+        Returns:
+        --------
+            Dict[str, Any]: A standardized error dictionary with 'ERROR' and
+            'CODE' keys.
+        """
+        __error_detail: str = (': ' + error[MESSAGE_DETAIL]) \
+            if MESSAGE_DETAIL in error else ''
+        return {ERROR: error[MESSAGE] + __error_detail, CODE: error[CODE]}
+
     def request_error(
             self, response: Dict[str, Any], error_message: str) -> None:
         """Handle errors in upload requests by checking the response status.
@@ -203,4 +267,22 @@ class RequestManager:
                 on its status.
         """
         if ERROR in response or response[STATUS] != SUCCESS:
-            raise RequestError(error_message)
+            raise RequestError(response[ERROR] + ' (' + error_message + ')')
+
+    def _is_rate_limited(self, response: Dict[str, Any]) -> bool:
+        """Check if an API response indicates rate limiting.
+
+        This method checks if the provided API response dictionary indicates
+        that the request was rate-limited. It looks for a specific error code
+        in the response.
+
+        Parameters:
+        -----------
+            response (Dict[str, Any]): The API response dictionary to check.
+
+        Returns:
+        --------
+            bool: True if the response indicates rate limiting,
+            False otherwise.
+        """
+        return CODE in response and response[CODE] == 8

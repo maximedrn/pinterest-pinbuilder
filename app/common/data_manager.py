@@ -29,7 +29,7 @@ class DataManager(FileManager):
 
     Methods:
     --------
-        verify_content(index: int) -> bool:
+        verify_content(index: int, file_length: int) -> bool:
             Retrieve and verify data content from the specified index.
 
         retrieve_content() -> Dict[str, Any]:
@@ -77,7 +77,7 @@ class DataManager(FileManager):
         if not any(key in data for key in UPLOAD_DATA):
             raise DataFormatError(DATA_FORMAT_ERROR)
         
-    def verify_content(self, index: int) -> bool:
+    def verify_content(self, index: int, file_length: int) -> bool:
         """Retrieve data content from the specified index.
         
         It checks for its integrity by performing data validation.
@@ -85,6 +85,7 @@ class DataManager(FileManager):
         Parameters:
         -----------
             index (int): The index of the data content to retrieve.
+            file_length (int): The selected file length.
             
         Returns:
         --------
@@ -93,7 +94,7 @@ class DataManager(FileManager):
         """
         self.__current_data: Dict[str, Any] = self.file_content[index]
         self.__check_content_integrity(self.__current_data)
-        return DataChecker(self.__current_data)()
+        return DataChecker(self.__current_data)(index, file_length)
         
     def retrieve_content(self) -> Dict[str, Any]:
         """Retrieve current loaded data.

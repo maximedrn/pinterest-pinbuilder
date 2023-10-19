@@ -18,6 +18,8 @@ from locale import getlocale
 from typing import Any, Dict, List
 from app.constants.file_settings import (
     TOPIC_TAGS_ID, TOPIC_TAGS_TAG_VALUE, TOPIC_TAGS_VALUE)
+from app.constants.messages import TOPIC_TAGS_RETRIEVE_ERROR
+from app.constants.processes import UPLOAD_PROCESS
 
 from app.constants.request_body import (
     DATA, LANGUAGE, OPTIONS, QUERY, TAGS_BODY)
@@ -25,6 +27,7 @@ from app.constants.webdriver import PINTEREST_TAGS_URL
 from app.services.login.cookie_manager import CookieManager
 from app.services.request_manager import RequestManager
 from app.utils.exceptions import RequestError
+from app.utils.logger.snackbar_manager import Snackbar
 
 
 class TagsManager(RequestManager):
@@ -139,4 +142,5 @@ class TagsManager(RequestManager):
             self.request_error(__response, '')
             return self.__extract_tags(__response)
         except (Exception, RequestError):
+            Snackbar(UPLOAD_PROCESS).error(TOPIC_TAGS_RETRIEVE_ERROR)
             return []

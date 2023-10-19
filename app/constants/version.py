@@ -15,15 +15,16 @@ Any distribution, modification or commercial use is strictly prohibited.
 
 from platform import platform, release, system
 from sys import version
+from typing import Final
 
 
 # Latest version of the tool.
-TOOL_VERSION: str = '1.1.0'
+TOOL_VERSION: Final[str] = '1.0.0'
 
 # Current Python version.
-PYTHON_VERSION: str = version
+PYTHON_VERSION: Final[str] = version
 
 # Complete details about the operating system.
-OPERATING_SYSTEM: str = platform()
-OPERATING_SYSTEM_NAME: str = system()
-SYSTEM_VERSION: str = release()
+OPERATING_SYSTEM: Final[str] = platform()
+OPERATING_SYSTEM_NAME: Final[str] = system()
+SYSTEM_VERSION: Final[str] = release()

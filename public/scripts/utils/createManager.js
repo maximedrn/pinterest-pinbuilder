@@ -14,7 +14,7 @@ import { reachableElement } from "../common/reachableElement.js";
 import { startLogWorker, stopLogWorker } from "./worker/workerManager.js";
 import { snackbarMessage } from "./worker/snackbarManager.js";
 import { TagManager } from "./tagsManager.js";
-import { CHECKED } from "./constants/attributes.js";
+import { CHECKED, FIELD_REQUIRED } from "./constants/attributes.js";
 import { DATA_FILES_KEYS, CREATE_FILE, TOPIC_TAGS, PAID_PIN } from "./constants/values.js";
 import {
     ASSETS_LOADING_TEXT,
@@ -44,7 +44,8 @@ import {
     ELEMENT_NEXT_ASSET_BUTTON,
     ELEMENT_PAID_PIN,
     ELEMENT_ORGANIC_PIN,
-    ELEMENT_PIN_TYPE_TOGGLE
+    ELEMENT_PIN_TYPE_TOGGLE,
+    ELEMENT_PINBOARD_FIELD
 } from "./constants/elements.js";
 
 /**
@@ -286,6 +287,13 @@ export class CreateManager extends TagManager {
         const organicPinElements = [...document.querySelectorAll(ELEMENT_ORGANIC_PIN)];
         paidPinElements.forEach(element => reachableElement(element, checked));
         organicPinElements.forEach(element => reachableElement(element, !checked));
+
+        // The Pinboard is required only if it is a paid Pin.
+        const pinboardInput = document.querySelector(ELEMENT_PINBOARD_FIELD);
+        const pinboardTitle = pinboardInput.parentNode.parentNode.querySelector("h3");
+        checked // checked = True => paid Pin is selected.
+            ? pinboardTitle.classList.add(FIELD_REQUIRED)
+            : pinboardTitle.classList.remove(FIELD_REQUIRED);
     }
 
     /**

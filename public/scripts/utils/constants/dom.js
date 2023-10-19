@@ -7,6 +7,12 @@
  */
 
 
+export const SNACKBAR_HTML_ELEMENT = `
+    <section class="snackbar__element" data-uuid="{}">
+        <i class="icon__material icon__large"></i>
+        <p></p>
+    </section>`;
+
 export const DATA_FILE_HTML_ELEMENT = `
     <section type="checkbox" class="container__list-element container__list-text">
         <i class="icon__material icon__medium">description</i>

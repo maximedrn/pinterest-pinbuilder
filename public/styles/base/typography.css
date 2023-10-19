@@ -56,6 +56,12 @@ span {
     margin-left: var(--padding-x-small);
 }
 
+.feature__soon::before {
+    content: "Soon!";
+    font-size: var(--text-xxx-small);
+    font-style: italic;
+}
+
 .container__preview-text {
     padding: var(--padding-xx-large);
 }
@@ -65,3 +71,4 @@ span {
     color: var(--secondary);
     text-align: center;
 }
+

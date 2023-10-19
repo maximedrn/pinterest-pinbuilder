@@ -1,26 +1,36 @@
 @charset "UTF-8";
 
 
+:root {
+    --snackbar-container-max-height: 120px;
+}
+
 .snackbar__container {
     position: fixed;
-    display: none;
+    bottom: var(--padding-medium);
+    width: fit-content;
+    align-self: center;
+    max-height: var(--snackbar-container-max-height);
+    overflow: hidden;
+}
+
+.snackbar__element {
     height: auto;
     text-align: center;
     align-self: center;
     border-radius: var(--border-radius-small);
     padding: var(--padding-small) var(--padding-medium);
-    bottom: var(--padding-medium);
     background: var(--quaternary);
     gap: var(--padding-medium);
     z-index: 1;
 }
 
-.snackbar__container.show {
+.snackbar__element.show {
     display: inline-flex;
     animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
 }
 
-.snackbar__container>p {
+.snackbar__element>p {
     color: var(--secondary);
 }
 

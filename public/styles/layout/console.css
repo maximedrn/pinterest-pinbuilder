@@ -8,6 +8,8 @@
 .container__console-title {
     text-align: center;
     width: fit-content;
+    max-width: 30%;
+    overflow-wrap: break-word;
 }
 
 .container__console-title>span {
@@ -17,14 +19,15 @@
 .container__console-message {
     justify-content: center;
     overflow: hidden;
+    flex: 1;
 }
 
 .container__console-message>p,
 .container__console-message>p>a {
     color: var(--secondary);
-    
+    overflow-wrap: break-word;
 }
 
 .container__console-message>p:last-child {
-    font-size: var(--text-xx-small);
+    font-size: var(--text-xxx-small);
 }

@@ -40,7 +40,7 @@
 }
 
 .container__list-text>span {
-    padding: var(--padding-x-small) var(--padding-medium);
+    padding: var(--padding-x-small) var(--padding-small);
     background: var(--border);
     color: var(--secondary);
     border-radius: var(--border-radius-small);

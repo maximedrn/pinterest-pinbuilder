@@ -7,11 +7,15 @@
  */
 
 
+import "../../common/format.js";
+import { stringToElement } from "../../common/stringToElement.js";
 import { SHOW } from "../constants/attributes.js";
+import { SNACKBAR_HTML_ELEMENT } from "../constants/dom.js";
 import {
-    ELEMENT_SNACKBAR,
+    ELEMENT_SNACKBAR_UUID,
     ELEMENT_SNACKBAR_ICON,
-    ELEMENT_SNACKBAR_TEXT
+    ELEMENT_SNACKBAR_TEXT,
+    CONTAINER_SNACKBAR
 } from "../constants/elements.js";
 
 
@@ -30,24 +34,36 @@ import {
  * @param {string} message.message - The text message to display in the snackbar.
  */
 function displaySnackbar(message) {
+    if (!message || !message?.message) return;
+
+    const uuid = crypto.randomUUID();
+    const snackbarString = SNACKBAR_HTML_ELEMENT.format(uuid);
+    const snackbarHtml = stringToElement(snackbarString);
+
+    const snackbarContainer = document.querySelector(CONTAINER_SNACKBAR);
+    snackbarContainer.insertBefore(snackbarHtml, snackbarContainer.firstChild);
+
     // Find the snackbar element on the web page.
-    const snackbarElement = document.querySelector(ELEMENT_SNACKBAR);
+    const snackbarQuerySelector = ELEMENT_SNACKBAR_UUID.format(uuid);
+    const snackbarElement = document.querySelector(snackbarQuerySelector);
     // Find the snackbar span element within the snackbar.
-    const snackbarSpan = document.querySelector(ELEMENT_SNACKBAR_TEXT);
+    const snackbarSpan = snackbarElement.querySelector(ELEMENT_SNACKBAR_TEXT);
     // Find the snackbar icon element within the snackbar.
-    const snackbarIcon = document.querySelector(ELEMENT_SNACKBAR_ICON);
+    const snackbarIcon = snackbarElement.querySelector(ELEMENT_SNACKBAR_ICON);
 
     const color = message?.color;
-    const icon = message?.icon;
 
     if (color) snackbarElement.style.background = color;
-    if (icon) snackbarIcon.textContent = icon;
+    snackbarIcon.textContent = message?.icon || "warning";
     snackbarSpan.textContent = message.message.toString();
 
     // Add the "show" class to the snackbar element to make it visible.
     snackbarElement.classList.add(SHOW);
-    // Hide the message after 5 seconds using a timeout.
-    setTimeout(() => snackbarElement.classList.remove(SHOW), 5000);
+    // Hide the message after 3 seconds using a timeout.
+    setTimeout(() => {
+        snackbarElement.classList.remove(SHOW);
+        snackbarElement.remove();
+    }, 3000);
 };
 
 /**

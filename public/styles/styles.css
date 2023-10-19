@@ -83,7 +83,8 @@ body {
 }
 
 *[type="button"],
-*[type="checkbox"] {
+*[type="checkbox"],
+iframe {
     user-select: none;
 }
 

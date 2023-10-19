@@ -92,7 +92,7 @@ export class UploadManager {
             uuid: accountName,
             starting_value: parseInt(startingValue) - 1 || 0,
             maximum_attempts: parseInt(maximumAttempts) || 1,
-            delete_temp_file: deleteTempFile
+            delete_temp_file: !deleteTempFile
         }
 
         return [true, content];

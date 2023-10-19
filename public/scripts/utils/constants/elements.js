@@ -12,9 +12,10 @@ export const IMAGE = "img";
 export const FAVICON_ELEMENT = "#favicon";
 
 // Snackbar container and text.
-export const ELEMENT_SNACKBAR = ".snackbar__container";
-export const ELEMENT_SNACKBAR_TEXT = ELEMENT_SNACKBAR + " p";
-export const ELEMENT_SNACKBAR_ICON = ELEMENT_SNACKBAR + " i";
+export const CONTAINER_SNACKBAR = ".snackbar__container";
+export const ELEMENT_SNACKBAR_UUID = ".snackbar__element[data-uuid=\"{}\"]";
+export const ELEMENT_SNACKBAR_TEXT = " p";
+export const ELEMENT_SNACKBAR_ICON = " i";
 
 
 /**
@@ -38,8 +39,8 @@ export const ELEMENT_LICENSE_KEY_BUTTON = CONTAINER_LICENSE_KEY + " .button__lar
 
 // License key header container.
 export const CONTAINER_LICENSE_KEY_TEXT = ".license-key__header-text"
-export const ELEMENT_LICENSE_KEY_ENABLE_TEXT = CONTAINER_LICENSE_KEY_TEXT + " p:first-child";
-export const ELEMENT_LICENSE_KEY_DISABLE_TEXT = CONTAINER_LICENSE_KEY_TEXT + " p:last-child";
+export const ELEMENT_LICENSE_KEY_DISABLE_TEXT = CONTAINER_LICENSE_KEY_TEXT + " p:first-child";
+export const ELEMENT_LICENSE_KEY_ENABLE_TEXT = CONTAINER_LICENSE_KEY_TEXT + " p:last-child";
 
 // Update and changelog popup.
 export const CONTAINER_UPDATE = ".container__update";

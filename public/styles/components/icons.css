@@ -25,6 +25,6 @@
     font-size: var(--text-small);
 }
 
-.dark img[src*=".svg"] {
+.dark img[src*=".svg"]:not(.image__no-invert) {
     filter: invert(1);
 }

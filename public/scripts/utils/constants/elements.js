@@ -49,6 +49,13 @@ export const ELEMENT_UPDATE_BUTTON = CONTAINER_UPDATE + " .button__large";
 export const ELEMENT_UPDATE_CHANGELOG = CONTAINER_UPDATE + " .container__changelog";
 export const ELEMENT_UPDATE_CHANGELOG_LIST = ELEMENT_UPDATE_CHANGELOG + " ul";
 
+// Information popup.
+export const ELEMENT_INFORMATION_BUTTON = ".information__button";
+export const CONTAINER_INFORMATION = ".container__information";
+export const ELEMENT_INFORMATION_CLOSE = CONTAINER_INFORMATION + " .container__popup-close";
+export const CONTAINER_VERSION = ".container__version";
+export const ELEMENT_VERSION_TEXT = CONTAINER_VERSION + ">span:last-child";
+
 
 /**
  * Process page elements.

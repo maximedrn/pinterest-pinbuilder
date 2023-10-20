@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+
+.container__version {
+    width: 100%;
+    justify-content: center;
+}
+
+.container__version>span {
+    color: var(--secondary);
+}
+
+@media screen and (max-width: 400px) {
+    .container__version {
+        flex-direction: column;
+    }
+}

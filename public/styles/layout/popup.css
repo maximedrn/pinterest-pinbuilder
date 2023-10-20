@@ -52,12 +52,12 @@
 
 .container__popup {
     position: relative;
-    justify-content: center;
     align-items: center;
     text-align: center;
     height: var(--popup-container-size);
     width: var(--popup-container-size);
     padding: var(--padding-x-large);
+    padding-top: calc(3 * var(--padding-x-large));
     border: var(--border-width-medium) solid var(--quaternary);
     gap: var(--padding-x-large);
     border-radius: var(--border-radius-medium);

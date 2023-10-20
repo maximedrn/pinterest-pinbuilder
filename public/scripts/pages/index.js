@@ -12,6 +12,7 @@ import { loadPreviousIframe } from "../utils/iframeManager.js";
 import { checkLicenseKey } from "../utils/licenseKeyManager.js";
 import { schemeModeButton, schemeModeManager } from "../utils/schemeManager.js";
 import { noTranslate } from "../common/noTranslate.js";
+import { displayInformation } from "../utils/informationManager.js";
 
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -22,4 +23,5 @@ window.addEventListener("DOMContentLoaded", async () => {
     schemeModeManager(); // Scheme manager.
     schemeModeButton();
     checkLicenseKey(); // License key manager.
+    displayInformation();
 });

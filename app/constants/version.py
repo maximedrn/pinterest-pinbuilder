@@ -19,7 +19,7 @@ from typing import Final
 
 
 # Latest version of the tool.
-TOOL_VERSION: Final[str] = '1.0.0'
+TOOL_VERSION: Final[str] = '1.1.0'
 
 # Current Python version.
 PYTHON_VERSION: Final[str] = version

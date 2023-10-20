@@ -151,7 +151,7 @@ class UserManager(RequestManager):
             UserManager.UserData: An object representing user data.
         """
         username: str = response['user']['username']
-        image_profile: str = response['user']['image_small_url']
+        image_profile: str = response['user']['image_large_url']
         # Check if the UUID and timestamp are still existing (they should!).
         __has_uuid: bool = UUID in cookies and cookies[UUID]
         __has_timestamp: bool = TIMESTAMP in cookies and cookies[TIMESTAMP]

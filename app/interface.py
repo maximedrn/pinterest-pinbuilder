@@ -157,6 +157,9 @@ class Interface(BaseManager):
         check_for_update(self) -> bool:
             Check if there is an update available.
 
+        get_tool_version(self) -> str:
+            Get and return the tool version.
+
         download_update(self, frontend_closed: bool = False) -> str | None:
             Download an update.
 
@@ -289,7 +292,17 @@ class Interface(BaseManager):
         --------
             bool: True if an update is available, False otherwise.
         """
-        return TOOL_VERSION != VersionManager.retrieve_tool_version() != None
+        tool_version: str = self.get_tool_version()
+        return tool_version != VersionManager.retrieve_tool_version() != None
+    
+    def get_tool_version(self) -> str:
+        """Get and return the tool version.
+
+        Returns:
+        --------
+            str: The tool version.
+        """
+        return TOOL_VERSION
     
     def download_update(self, frontend_closed: bool = False) -> str | None:
         """Download an update.

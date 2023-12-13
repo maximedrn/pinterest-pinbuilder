@@ -81,7 +81,8 @@ class ModulesManager:
             return True  # The module is not restricted on any system.
         if OPERATING_SYSTEM_NAME not in requirements:
             return False  # The module is not compatible with the system.
-        if SYSTEM_VERSION not in requirements[OPERATING_SYSTEM_NAME]:
+        if (requirements[OPERATING_SYSTEM_NAME] and
+                SYSTEM_VERSION not in requirements[OPERATING_SYSTEM_NAME]):
             return False  # The module is not compatible with the version.
         return True  # The system is compatible with the system.
     

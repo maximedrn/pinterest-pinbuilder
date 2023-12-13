@@ -16,6 +16,7 @@ from __future__ import annotations
 from copy import deepcopy
 from genericpath import exists
 from json import dumps, loads
+from json.decoder import JSONDecodeError
 from time import time
 from typing import Any, Dict, List, Tuple
 from uuid import uuid4
@@ -124,7 +125,10 @@ class CookieManager:
         if not exists(COOKIES_FILE):  # The file containing the cookies
             return []  # does not exist, it will be created later.
         with open(COOKIES_FILE, 'r', encoding='utf-8') as file:
-            return loads(file.read())
+            try:  # Try to load the cookies file content.
+                return loads(file.read())
+            except JSONDecodeError:
+                return []
         
     @staticmethod
     def retrieve_cookies_by_id(id: str) -> Dict[str, Any]:

@@ -19,14 +19,12 @@ from io import BytesIO
 from typing import Any, Dict, List, Tuple
 from uuid import uuid4
 
-from eel import sleep
-
 from app.constants.file_settings import (
     DATETIME, FILE_PATH, IMAGE_PIN_TYPE, PAID_PIN, PINBOARD,
     PINBOARD_ID, TITLE, VIDEO_PIN_TYPE)
 from app.constants.messages import (
     AMAZON_CREDENTIALS_ERROR, ETAG_ERROR, PIN, PIN_CONTENT_ERROR,
-    PIN_SCHEDULE, PIN_SCHEDULED, PIN_UPLOAD, PIN_UPLOAD_ERROR,
+    PIN_SCHEDULE, PIN_SCHEDULE_URL, PIN_SCHEDULED, PIN_UPLOAD, PIN_UPLOAD_ERROR,
     PIN_UPLOAD_URL, PIN_UPLOADED, PINBOARD_ID_ERROR, PINBOARDS_ERROR,
     RATE_LIMITED)
 from app.constants.processes import UPLOAD_PROCESS
@@ -38,7 +36,7 @@ from app.constants.webdriver import (
     PINTEREST_PIN_CONTENT_ORGANIC_URL, PINTEREST_PIN_CONTENT_PAID_URL,
     PINTEREST_PIN_CONTENT_SCHEDULED_ORGANIC_URL,
     PINTEREST_PIN_CONTENT_SCHEDULED_PAID_URL, PINTEREST_PINBOARD_ID_URL,
-    UPLOAD_ID, UPLOAD_PARAMETERS)
+    UPLOAD_ID, UPLOAD_PARAMETERS, USERNAME)
 from app.services.create.assets_manager import AssetsManager
 from app.services.login.cookie_manager import CookieManager
 from app.services.request_manager import RequestManager
@@ -153,6 +151,7 @@ class UploadManager(RequestManager, UploadBody):
         self.__file_pin_type: str = __file_settings[0]
         self.__file_upload_url: str = __file_settings[1]
         self.__console: Console = Console(UPLOAD_PROCESS)
+        self.__username: str = cookies[USERNAME]
         super().__init__(*CookieManager.format_cookies(cookies))
     
     def __create_uuids(self) -> Tuple[str, str]:
@@ -423,7 +422,6 @@ class UploadManager(RequestManager, UploadBody):
             __waiting_info: str = RATE_LIMITED.format(remaining_time + 1)
             __error: str = __response[ERROR][MESSAGE_DETAIL]
             self.__console.info(__waiting_info, __error)
-            sleep(60)  # Wait 1 minute before refreshing log.
         return self.__post_pin_content(asset_etag, preview_etag)
     
     def __start_upload(self) -> str:
@@ -473,11 +471,12 @@ class UploadManager(RequestManager, UploadBody):
             __title: str = PIN_SCHEDULE if __schedule else PIN_UPLOAD
             __display_title: str | None = self.__get_title_extract()
             self.__console.message(__title, __display_title)
-            __pin_id: str = self.__start_upload()  # Upload the selected Pin.
+            pin_id: str = self.__start_upload()  # Upload the selected Pin.
             __message: str = PIN_SCHEDULED if __schedule else PIN_UPLOADED
-            __url: str = PIN_UPLOAD_URL.format(id=__pin_id)
+            __url: str = PIN_UPLOAD_URL.format(id=pin_id) if not __schedule \
+                else PIN_SCHEDULE_URL.format(user=self.__username, id=pin_id)
             self.__console.success(__message, __url)
             return True  # The upload has been completed.
         except (Exception, RequestError):
             self.__console.error(PIN_UPLOAD_ERROR)
-            return False  # An error occurred during the Pine upload.
+            return False  # An error occurred during the Pin upload.

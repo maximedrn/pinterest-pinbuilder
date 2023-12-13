@@ -55,7 +55,8 @@ MODULES_LIST: Final[
     'future': (None, None),
     'tqdm': (None, None),
     'psutil': (None, None),
-    'typing-extensions': (None, None)
+    'typing-extensions': (None, None),
+    'screeninfo': (None, None)
 }
 
 # Formats used to install modules.

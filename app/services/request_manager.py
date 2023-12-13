@@ -102,6 +102,8 @@ class RequestManager:
         self.__headers: Dict[str, str] = {'x-csrftoken': csrf_token}
         self.__cookies: Dict[str, Any] = cookies  # self.__convert_cookies(cookies)
         self.__extension_domain: str = extension_domain
+        if not self.__extension_domain.endswith('/'):
+            self.__extension_domain += '/'
     
     @deprecated('Not in use because cookies are not in string format.')
     def __convert_cookies(self, cookies: str) -> Dict[str, Any]:

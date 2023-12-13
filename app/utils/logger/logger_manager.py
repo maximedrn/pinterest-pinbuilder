@@ -14,15 +14,18 @@ Any distribution, modification or commercial use is strictly prohibited.
 
 
 from __future__ import annotations
+from datetime import datetime as dt
+from logging import basicConfig, ERROR, error
 from os import makedirs
 from os.path import join
 from socket import socket, AF_INET, SOCK_STREAM
-from traceback import print_exc
+from traceback import format_exc, print_exc
 from typing import Any, Dict, List
 from uuid import uuid4
 
 from app.common.file_reader import FileReader
 from app.common.file_writer import FileWriter
+from app.constants.file_settings import US_DATETIME_FORMAT
 from app.constants.paths import LOG_FOLDER, FRONTEND_HOST, FRONTEND_PORT
 from app.constants.webdriver import UUID
 from app.utils.exceptions import LoggerError
@@ -209,4 +212,8 @@ class Logger:
     @staticmethod
     def error() -> None:
         """Print an error message to the console in red text."""
+        __log_file_name: str = dt.now().strftime(US_DATETIME_FORMAT) + '.log'
+        __log_file: str = join(LOG_FOLDER, __log_file_name)
+        basicConfig(filename=__log_file, level=ERROR)
+        error(format_exc())
         print_exc()

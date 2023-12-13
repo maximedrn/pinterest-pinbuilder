@@ -3,10 +3,10 @@
 
 
 """
-@author: Final[Pinterest Pinbuilder.
+@author: Pinterest Pinbuilder.
 
-Github: Final[https://github.com/maximedrn
-Telegram: Final[https://t.me/maximedrn
+Github: https://github.com/maximedrn
+Telegram: https://t.me/maximedrn
 
 Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
 Any distribution, modification or commercial use is strictly prohibited.
@@ -17,30 +17,29 @@ from typing import Final, List
 
 
 DOMAIN_EXTENSION_REGEX: Final[str] = (
-    r'https?://(?:www\.)?pinterest\.([a-zA-Z]+)/')
-DEFAULT_DOMAIN_EXTENSION: Final[str] = 'com'
+    r'^(https:\/\/[a-z]+\.[a-z]+(?:\.[a-z]+)?)\/?')
 
 # Pinterest request URLs.
-PINTEREST_BASE_URL: Final[str] = 'https://pinterest.{}/'
-PINTEREST_URL: Final[str] = (
-    PINTEREST_BASE_URL.format(DEFAULT_DOMAIN_EXTENSION))
+PINTEREST_URL: Final[str] = 'https://pinterest.com/'
 
 PINTEREST_PIN_URL: Final[str] = PINTEREST_URL + 'pin/'
+PINTEREST_SCHEDULE_PIN_URL: Final[str] = PINTEREST_URL + 'scheduled-pin/'
 PINTEREST_LOGIN_URL: Final[str] = PINTEREST_URL + 'login/'
-PINTEREST_RESOURCE_URL: Final[str] = PINTEREST_BASE_URL + 'resource/'
+
+PINTEREST_RESOURCE_URL: Final[str] = '{}resource/'
 PINTEREST_USER_URL: Final[str] = (
     PINTEREST_RESOURCE_URL + 'UserSessionResource/create/')
 PINTEREST_TAGS_URL: Final[str] = (
     PINTEREST_RESOURCE_URL + 'ApiResource/get/')
 
+
 # Pinterest upload request URLs.
 PINTEREST_IMAGE_UPLOAD_URL: Final[str] = 'https://u.pinimg.com/'
 PINTEREST_MEDIA_UPLOAD_URL: Final[str] = \
     'https://pinterest-media-upload.s3-accelerate.amazonaws.com/'
-PINTEREST_AMAZON_ORGANIC_URL: Final[str] = (
-    PINTEREST_BASE_URL + 'resource/ApiResource/create/')
-PINTEREST_AMAZON_PAID_URL: Final[str] = (
-    PINTEREST_BASE_URL + 'resource/VIPResource/create/')
+
+PINTEREST_AMAZON_ORGANIC_URL: Final[str] = '{}resource/ApiResource/create/'
+PINTEREST_AMAZON_PAID_URL: Final[str] = '{}resource/VIPResource/create/'
 PINTEREST_ETAG_URL: Final[str] = (
     PINTEREST_RESOURCE_URL + 'VIPResource/get/')
 PINTEREST_PINBOARD_ID_URL: Final[str] = (
@@ -99,3 +98,7 @@ CHROME_OPTIONS: Final[List[str]] = [
     '--disable-gpu'
     '--no-sandbox'
 ]
+
+# MacOS signature commands.
+CODE_SIGN_UNSIGN: Final[str] = 'codesign --remove-signature "{}"'
+CODE_SIGN_SIGN: Final[str] = 'codesign --force --deep -s - "{}"'

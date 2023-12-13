@@ -15,7 +15,7 @@ Any distribution, modification or commercial use is strictly prohibited.
 
 from typing import Final
 
-from app.constants.webdriver import PINTEREST_PIN_URL
+from app.constants.webdriver import PINTEREST_PIN_URL, PINTEREST_SCHEDULE_PIN_URL, PINTEREST_URL
 
 
 # This file contains all the messages displayed on the tool
@@ -93,6 +93,12 @@ WEBDRIVER_DOWNLOAD_ERROR: Final[str] = 'Webdriver download failed.'
 WEBDRIVER_PATCHING: Final[str] = 'Patching the Webdriver.'
 WEBDRIVER_PATCHED: Final[str] = 'Webdriver patched.'
 WEBDRIVER_NOT_PATCHED: Final[str] = 'Webdriver not patched.'
+WEBDRIVER_SIGNING: Final[str] = 'Modifying the ChromeDriver signature.'
+WEBDRIVER_SIGNED: Final[str] = 'ChromeDriver signature modified.'
+WEBDRIVER_SIGNING_ERROR: Final[str] = (
+    'ChromeDriver signature modification failed.')
+WEBDRIVER_RUN_ERROR: Final[str] = (
+    'An error occurred while opening the webdriver.')
 
 # About the cookie retrieval.
 LOGIN: Final[str] = 'Login'
@@ -119,6 +125,9 @@ PIN_SCHEDULED: Final[str] = 'Pin scheduled.'
 PIN_UPLOAD_URL: Final[str] = (
     f'<a href="{PINTEREST_PIN_URL}{{id}}" target="_blank">'
     f'{PINTEREST_PIN_URL}{{id}}</a>')
+PIN_SCHEDULE_URL: Final[str] = (
+    f'<a href="{PINTEREST_URL}{{user}}/scheduled-pin/{{id}}" target="_blank">'
+    f'{PINTEREST_URL}{{user}}/scheduled-pin/{{id}}</a>')
 PIN_UPLOAD_ERROR: Final[str] = 'Pin not uploaded.'
 AMAZON_CREDENTIALS_ERROR: Final[str] = (
     'An error occurred while retrieving Amazon upload credentials.')

@@ -15,6 +15,7 @@ Any distribution, modification or commercial use is strictly prohibited.
 
 from __future__ import annotations
 from multiprocessing.managers import DictProxy
+from os import system
 from os.path import exists
 from typing import Any
 
@@ -28,10 +29,12 @@ from webdriver_manager.core.os_manager import (
 from app.constants.messages import (
     WEBDRIVER, WEBDRIVER_DOWNLOAD, WEBDRIVER_DOWNLOAD_ERROR,
     WEBDRIVER_DOWNLOADED, WEBDRIVER_NOT_PATCHED, WEBDRIVER_PATCHED,
-    WEBDRIVER_PATCHING, WEBDRIVER_PATH_SET)
+    WEBDRIVER_PATCHING, WEBDRIVER_PATH_SET, WEBDRIVER_SIGNED, WEBDRIVER_SIGNING, WEBDRIVER_SIGNING_ERROR)
 from app.constants.paths import ASSETS_FOLDER, WEBDRIVER_FILE
 from app.constants.processes import MANAGER_PROCESSES, LOGIN_PROCESS
-from app.constants.webdriver import CHROME_OPTIONS
+from app.constants.version import MACOS, OPERATING_SYSTEM_ALT
+from app.constants.webdriver import (
+    CHROME_OPTIONS, CODE_SIGN_SIGN, CODE_SIGN_UNSIGN)
 from app.utils.exceptions import WebdriverDownloadError, WebdriverPatchError
 from app.utils.logger.console_manager import Console
 from app.utils.pid_manager import save_processes
@@ -86,17 +89,6 @@ class WebdriverManager:
             ChromeType.GOOGLE)  # Get the current Chrome version.
         return int(__version.split('.')[0]) if __version else 110
     
-    def __patch_webdriver(self) -> None:
-        """Patch the webdriver if necessary."""
-        self.__console.message(WEBDRIVER_PATCHING)
-        try:  # Attempt to patch the webdriver using the `uc.Patcher()` class.
-            Patcher(self.__browser_path, False, self.__chrome_version).auto()
-            self.__console.success(WEBDRIVER_PATCHED)
-        except (WebdriverPatchError, Exception):
-            # In case of an error, log an error message with error
-            # details and indicate that webdriver patching failed.
-            self.__console.error(WEBDRIVER_NOT_PATCHED)
-    
     def __download_webdriver(self) -> bool:
         """Download the webdriver if not already available.
 
@@ -118,6 +110,27 @@ class WebdriverManager:
             self.__browser_path: str = WEBDRIVER_FILE
         return True  # The webdriver file has been downloaded or found.
     
+    def __patch_webdriver(self) -> None:
+        """Patch the webdriver if necessary."""
+        self.__console.message(WEBDRIVER_PATCHING)
+        try:  # Attempt to patch the webdriver using the `uc.Patcher()` class.
+            Patcher(self.__browser_path, False, self.__chrome_version).auto()
+            self.__console.success(WEBDRIVER_PATCHED)
+        except (WebdriverPatchError, Exception):
+            # In case of an error, log an error message with error
+            # details and indicate that webdriver patching failed.
+            self.__console.error(WEBDRIVER_NOT_PATCHED)
+    
+    def __sign_webdriver(self) -> None:
+        """Re-sign the webdriver on macOS."""
+        try:  # Attempt to re-sign the webdriver after the patch.
+            self.__console.message(WEBDRIVER_SIGNING)
+            system(CODE_SIGN_UNSIGN.format(self.__browser_path))
+            system(CODE_SIGN_SIGN.format(self.__browser_path))
+            self.__console.message(WEBDRIVER_SIGNED)
+        except Exception:
+            self.__console.error(WEBDRIVER_SIGNING_ERROR)
+    
     def __set_up_new_webdriver(self, manager: DictProxy[Any, Any]) -> None:
         """Set up a new webdriver with configured options."""
         # Create a ChromeOptions object to configure Chrome browser options.
@@ -129,13 +142,14 @@ class WebdriverManager:
             options=chrome_options, version_main=self.__chrome_version)
         self.driver.maximize_window()  # Maximize the browser window
         manager[MANAGER_PROCESSES] = save_processes(self.driver)
-        
 
     def open_webdriver(self, manager: DictProxy[Any, Any]) -> None:
         """Download, patch and open the webdriver."""
         if not self.__download_webdriver():  # Download the webdriver.
             raise WebdriverDownloadError()
         self.__patch_webdriver()  # Patch the webdriver.
+        if OPERATING_SYSTEM_ALT == MACOS:
+            self.__sign_webdriver()  # Re-sign the webdriver on macOS.
         self.__set_up_new_webdriver(manager)  # Set up a new webdriver.
     
     def close_webdriver(self) -> None:

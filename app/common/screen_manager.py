@@ -14,7 +14,7 @@ Any distribution, modification or commercial use is strictly prohibited.
 
 
 from __future__ import annotations
-from tkinter import Tk
+from screeninfo import Monitor, get_monitors
 from typing import Tuple
 
 from app.constants.screen import (
@@ -32,8 +32,9 @@ def get_interface_size() -> Tuple[Tuple[float, float], Tuple[float, float]]:
             (x, y) to center the interface on the screen.
     """
     # Get the user's screen width and height.
-    __user_screen_width: int = Tk().winfo_screenwidth()
-    __user_screen_height: int = Tk().winfo_screenheight()
+    monitor: Monitor = get_monitors()[0]
+    __user_screen_width: int = monitor.width
+    __user_screen_height: int = monitor.height
     # Initialize the width and height based on maximum values and multipliers.
     width: float = MAX_WIDTH * WIDTH_MULTIPLICATOR  # Default.
     height: float = MAX_HEIGHT * HEIGHT_MULTIPLICATOR  # Default.
@@ -41,6 +42,6 @@ def get_interface_size() -> Tuple[Tuple[float, float], Tuple[float, float]]:
     height: float = min(height, __user_screen_height)
     # Calculate the position to center the interface on the screen.
     position: Tuple[float, float] = (
-        (__user_screen_width - width) / 4,
-        ( __user_screen_height - height) / 4)
+        (__user_screen_width - width) / 2,
+        ( __user_screen_height - height) / 2)
     return (width, height), position

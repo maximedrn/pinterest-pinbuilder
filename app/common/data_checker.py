@@ -23,8 +23,8 @@ from validators.url import pattern
 
 from app.constants.file_settings import (
     DATA_LENGTH, DATETIME, DATETIME_FORMAT,
-    DATETIME_FORMAT_REGEX, FILE_PATH, LINK, PAID_PIN, PINBOARD,
-    TOPIC_TAGS, TOPIC_TAGS_KEYS)
+    DATETIME_FORMAT_REGEX, DATETIME_SCHEDULE_LIMIT, FILE_PATH, LINK,
+    PAID_PIN, PINBOARD, TOPIC_TAGS, TOPIC_TAGS_KEYS)
 from app.constants.messages import (
     DATA_CHECKER_ERROR, DATETIME_FORMAT_ERROR, DATETIME_PAST_ERROR,
     DATETIME_SCHEDULE_ERROR, EXTERNAL_LINK_ERROR, FILE_PATH_ERROR,
@@ -134,7 +134,8 @@ class DataChecker:
         -------
             RequiredValueError: If "pinboard" is missing.
         """
-        __is_paid: bool = bool(self.__current_data[PAID_PIN])
+        __is_paid: bool = bool(self.__current_data[PAID_PIN]) \
+            if not self.__missing(PAID_PIN) else False
         if __is_paid and not self.__current_data[PINBOARD]:
             raise RequiredValueError(PINBOARD_VALUE_ERROR)
 
@@ -180,7 +181,7 @@ class DataChecker:
         __datetime: dt = dt.strptime(__datetime_string, DATETIME_FORMAT)
         if __datetime < dt.now():  # Scheduled in the past.
             raise IncorrectValueError(DATETIME_PAST_ERROR)
-        if __datetime - dt.now() > timedelta(days=14):
+        if __datetime - dt.now() > timedelta(days=DATETIME_SCHEDULE_LIMIT):
             raise IncorrectValueError(DATETIME_SCHEDULE_ERROR)
         # if __datetime.minute not in (0, 30):
         #     raise IncorrectValueError(DATETIME_MINUTES_ERROR)

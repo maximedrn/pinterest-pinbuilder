@@ -68,6 +68,7 @@ DATETIME_FORMAT: Final[str] = '%d/%m/%Y %H:%M'
 JS_DATETIME_FORMAT: Final[str] = '%d/%m/%Y %H:%M'
 DATETIME_FORMAT_REGEX: Final[str] = r'\d{2}/\d{2}/\d{4} \d{2}:\d{2}'
 JS_DATETIME_FORMAT_REGEX: Final[str] = r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}'
+DATETIME_SCHEDULE_LIMIT: Final[int] = 30
 
 IMAGE_TYPE: Final[str] = 'image'
 VIDEO_TYPE: Final[str] = 'video'

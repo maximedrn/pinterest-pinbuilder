@@ -15,20 +15,21 @@ Any distribution, modification or commercial use is strictly prohibited.
 
 from __future__ import annotations
 from multiprocessing.managers import DictProxy
-from re import Match, search
+from re import Match, match
 from time import sleep
 from typing import Any, Dict
 
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.expected_conditions import url_contains
 
 from app.constants.messages import (
     COOKIE_RETRIEVAL, COOKIE_RETRIEVAL_ERROR, COOKIE_RETRIEVED,
-    COOKIE_RETRIEVED_USER, LOGIN, MANUAL_LOGIN)
+    COOKIE_RETRIEVED_USER, LOGIN, MANUAL_LOGIN, WEBDRIVER_RUN_ERROR)
 from app.constants.processes import LOGIN_PROCESS
 from app.constants.webdriver import (
-    DEFAULT_DOMAIN_EXTENSION, DOMAIN_EXTENSION_REGEX,
-    LANGUAGE, PINTEREST_LOGIN_URL, PINTEREST_LOGIN_URL_MATCH)
+    DOMAIN_EXTENSION_REGEX, LANGUAGE, PINTEREST_LOGIN_URL,
+    PINTEREST_LOGIN_URL_MATCH, PINTEREST_URL)
 from app.services.login.cookie_manager import CookieManager
 from app.services.login.user_manager import UserManager
 from app.services.webdriver_manager import WebdriverManager
@@ -97,9 +98,9 @@ class LoginManager(WebdriverManager):
             str: The domain extension (e.g., '.com') from the current URL,
             or a default extension if not found.
         """
-        __regex: Match[str] | None = search(
+        __regex: Match[str] | None = match(
             DOMAIN_EXTENSION_REGEX, self.driver.current_url)
-        return __regex.group(1) if __regex else DEFAULT_DOMAIN_EXTENSION
+        return __regex.group(1) if __regex else PINTEREST_URL
 
     def __retrieve_session_cookies(self) -> None:
         """Retrieve session cookies from the WebDriver browser."""
@@ -149,6 +150,7 @@ class LoginManager(WebdriverManager):
             __message: str = COOKIE_RETRIEVED_USER.format(user_data[0]) \
                 if isinstance(user_data, tuple) else COOKIE_RETRIEVED
             self.__console.success(__message)
-        except (CookieRetrievalError,  # Cookies or Webdriver download error.
-                WebdriverDownloadError, Exception):
+        except (WebdriverDownloadError, WebDriverException):
+            self.__console.error(WEBDRIVER_RUN_ERROR)
+        except (CookieRetrievalError, Exception):
             self.__console.error(COOKIE_RETRIEVAL_ERROR)

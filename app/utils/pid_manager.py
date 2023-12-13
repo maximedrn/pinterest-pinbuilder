@@ -85,5 +85,5 @@ def kill_listener_processes() -> None:
                     print(PROCESS_HALTED.format(  # Display its information.
                         name=process.name(), pid=process.pid))
         except (Exception, KillListenerProcessError):
-            Logger.error()  # Display the exception error.
+            # Logger.error()  # Display the exception error.
             continue  # The process cannot be terminated.

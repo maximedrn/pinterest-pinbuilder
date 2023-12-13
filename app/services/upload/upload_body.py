@@ -235,8 +235,10 @@ class UploadBody:
         if PAID_PIN in options and options[PAID_PIN]:
             pin_content[SOURCE_URL] = PAID_PIN_URL
         # Insert the Pin content into the different parts.
+        options[TITLE] = content[TITLE]
         options[DESCRIPTION] = content[DESCRIPTION]
-        options[BOARD_ID] = content[PINBOARD_ID]
+        if PINBOARD_ID in content:  # The Pinboard is not required.
+            options[BOARD_ID] = content[PINBOARD_ID]
         options[LINK] = content[LINK]
         options[SCHEDULED_TIMESTAMP] = self.__convert_to_timestamp(
             content[DATETIME])  # Convert the schedule datetime.

@@ -16,8 +16,9 @@
  * @returns {string} The formatted date string in the "DD/MM/YYYY" format.
  */
 export function datetimeFormat(datetime, addedDays = 0) {
+    datetime = new Date(datetime.setDate(datetime.getDate() + addedDays));
     // Get day, month, and year components.
-    const day = String(datetime.getDate() + addedDays).padStart(2, "0");
+    const day = String(datetime.getDate()).padStart(2, "0");
     const month = String(datetime.getMonth() + 1).padStart(2, "0");
     const year = datetime.getFullYear();
     // Format the date as "DD/MM/YYYY".

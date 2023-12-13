@@ -93,4 +93,4 @@ export const UUID = "data-uuid";
 export const DATA_FILE = "data-file";
 
 export const FLATPICKR_FORMAT = "d/m/Y H:i";
-export const MAXIMUM_SCHEDULE_DAYS = 14;
+export const MAXIMUM_SCHEDULE_DAYS = 31;

@@ -1,7 +1,7 @@
 urllib3
 requests
 psutil
-pillow==9.2.0
+pillow
 # PyQt6: only for Windows (10 and 11), Linux and macOS.
 pyqt6; sys_platform == 'linux' or sys_platform == 'darwin' or (sys_platform == 'win32' and (platform_release == '10' or platform_release == '11'))
 pyqt6-qt6; sys_platform == 'linux' or sys_platform == 'darwin' or (sys_platform == 'win32' and (platform_release == '10' or platform_release == '11'))
@@ -17,6 +17,7 @@ pyparsing
 gevent
 greenlet
 typing-extensions
+screeninfo
 colorama==0.4.5
 selenium==4.5.0
 undetected_chromedriver==3.4.4

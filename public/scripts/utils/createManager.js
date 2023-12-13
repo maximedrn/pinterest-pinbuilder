@@ -91,12 +91,13 @@ export class CreateManager extends TagManager {
         // Load the previous chunk and check if the limit is reached.
         const isLimitNotReached = await eel.load_previous_chunk()();
         // If the limit is reached, exit the function.
-        if (!isLimitNotReached) return this.#selectAsset(index);
+        if (!isLimitNotReached && !isNaN(index)) return this.#selectAsset(index);
+        if (!isLimitNotReached) return;
         // Load and display the assets preview from the previous chunk.
         const length = await this.#loadAssetsPreviewBinary();
         // Clear the data fields related to the previous chunk.
         this.#emptyPinDataFields();
-        this.#selectAsset(length - 1);
+        if (length - 1 >= 0) this.#selectAsset(length - 1);
     }
 
     /**
@@ -127,7 +128,8 @@ export class CreateManager extends TagManager {
         // Load the next chunk and check if the limit is reached.
         const isLimitNotReached = await eel.load_next_chunk()();
         // If the limit is reached, exit the function.
-        if (!isLimitNotReached) return this.#selectAsset(index);
+        if (!isLimitNotReached && !isNaN(index)) return this.#selectAsset(index);
+        if (!isLimitNotReached) return;
         // Load and display the assets preview from the next chunk.
         await this.#loadAssetsPreviewBinary();
         // Clear the data fields related to the previous chunk.

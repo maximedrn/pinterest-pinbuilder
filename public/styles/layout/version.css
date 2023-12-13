@@ -1,6 +1,11 @@
 @charset "UTF-8";
 
 
+.container__changelog>ul {
+    text-align: start;
+}
+
+
 .container__version {
     width: 100%;
     justify-content: center;

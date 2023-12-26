@@ -1,3 +1,11 @@
+# Project related paths
+assets/.wdm/
+assets/cookies.json
+assets/license_key.json
+data/upload
+public/logs/*.json
+public/logs/*.html
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

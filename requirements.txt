@@ -25,4 +25,4 @@ webdriver-manager==4.0.0
 eel>=0.15.3
 validators==0.20.0
 filetype==1.2.0
-opencv-python==4.6.0.66
+opencv-python==4.8.1.78

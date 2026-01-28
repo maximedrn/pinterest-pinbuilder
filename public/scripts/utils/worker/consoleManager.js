@@ -1,19 +1,10 @@
-// web/js/utils/worker/consoleManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 import "../../common/format.js";
 import { stringToElement } from "../../common/stringToElement.js";
-import { CONSOLE_OUTPUT_PARAGRAPH } from "../constants/elements.js";
 import {
     CONSOLE_HTML_ELEMENT,
     CONSOLE_HTML_ELEMENT_BACKGROUND
 } from "../constants/dom.js";
+import { CONSOLE_OUTPUT_PARAGRAPH } from "../constants/elements.js";
 
 
 /**
@@ -32,7 +23,7 @@ export function displayConsoleOutputs(messages) {
     messages = JSON.parse(messages).reverse();
     const consoleContainer = document.querySelector(CONSOLE_OUTPUT_PARAGRAPH);
     consoleContainer.innerHTML = "";
-    
+
     messages.forEach(message => {
         const title = message?.title || "";
         const color = message?.color;

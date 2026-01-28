@@ -1,32 +1,18 @@
-# -*- coding: utf-8 -*-
-# app/utils/logger/logger_manager.py
-
-
-"""
-@author: Pinterest Pinbuilder.
-
-Github: https://github.com/maximedrn
-Telegram: https://t.me/maximedrn
-
-Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
-Any distribution, modification or commercial use is strictly prohibited.
-"""
-
-
 from __future__ import annotations
+
 from datetime import datetime as dt
-from logging import basicConfig, ERROR, error
+from logging import ERROR, basicConfig, error
 from os import makedirs
 from os.path import join
-from socket import socket, AF_INET, SOCK_STREAM
+from socket import AF_INET, SOCK_STREAM, socket
 from traceback import format_exc, print_exc
-from typing import Any, Dict, List
+from typing import Any
 from uuid import uuid4
 
 from app.common.file_reader import FileReader
 from app.common.file_writer import FileWriter
 from app.constants.file_settings import US_DATETIME_FORMAT
-from app.constants.paths import LOG_FOLDER, FRONTEND_HOST, FRONTEND_PORT
+from app.constants.paths import FRONTEND_HOST, FRONTEND_PORT, LOG_FOLDER
 from app.constants.webdriver import UUID
 from app.utils.exceptions import LoggerError
 
@@ -34,31 +20,31 @@ from app.utils.exceptions import LoggerError
 class LoggerManager(FileWriter, FileReader):
     """Manage logging and sending messages to a file and a frontend.
 
-    This class provides methods for writing log messages to a file and 
+    This class provides methods for writing log messages to a file and
     sending them to a frontend interface.
 
     Methods:
     --------
         __init__(self, file_name: str) -> None:
             Initialize a new LoggerManager instance.
-            
+
         clear(self) -> LoggerManager:
             Clear the contents of the log file.
-            
+
     Protected methods:
     ------------------
         _format_content(
                 self, message: str, second_message: str | None = None,
                 title: str | None = None, color: str | None = None,
-                icon: str | None = None) -> Dict[str, Any]:
-                
-        _write_file(self, content: List[Dict[str, str]]) -> None:
-            
+                icon: str | None = None) -> dict[str, Any]:
+
+        _write_file(self, content: list[dict[str, str]]) -> None:
+
     Private methods:
     ----------------
         __create_folder(self) -> None:
             Create the log folder if it does not exist.
-            
+
          __convert(self, message: str) -> str:
             Convert color codes in a log message to HTML tags.
 
@@ -67,7 +53,7 @@ class LoggerManager(FileWriter, FileReader):
         __file_name (str): The name of the log file.
         __uuid (str): The unique ID for the log message.
     """
-    
+
     def __init__(self, file_name: str) -> None:
         """Initialize a new LoggerManager instance.
 
@@ -77,11 +63,15 @@ class LoggerManager(FileWriter, FileReader):
         """
         self.__file_name: str = join(LOG_FOLDER, file_name)
         self.__uuid: str = str(uuid4())
-        
+
     def _format_content(
-            self, message: str, second_message: str | None = None,
-            title: str | None = None, color: str | None = None,
-            icon: str | None = None) -> Dict[str, Any]:
+        self,
+        message: str,
+        second_message: str | None = None,
+        title: str | None = None,
+        color: str | None = None,
+        icon: str | None = None,
+    ) -> dict[str, Any]:
         """Format log content into a dictionary for logging.
 
         This method takes various log-related parameters, such as the main
@@ -104,7 +94,7 @@ class LoggerManager(FileWriter, FileReader):
 
         Returns:
         --------
-            Dict[str, Any]: A dictionary containing formatted log content with
+            dict[str, Any]: A dictionary containing formatted log content with
             the specified parameters.
         """
         return {
@@ -113,14 +103,14 @@ class LoggerManager(FileWriter, FileReader):
             "message": message,
             "second_message": second_message,
             "color": color,
-            "icon": icon
+            "icon": icon,
         }
-    
+
     def __create_folder(self) -> None:
         """Create the log folder if it does not exist."""
         makedirs(LOG_FOLDER, exist_ok=True)
-        
-    def _write_file(self, content: List[Dict[str, str]]) -> None:
+
+    def _write_file(self, content: list[dict[str, str]]) -> None:
         """Write the provided content to a log file, create a folder
         if necessary, and send the log data to a frontend service.
 
@@ -132,7 +122,7 @@ class LoggerManager(FileWriter, FileReader):
 
         Parameters:
         -----------
-            content (List[Dict[str, str]]): A list of dictionaries
+            content (list[dict[str, str]]): A list of dictionaries
                 containing log content.
 
         Raises:
@@ -148,7 +138,7 @@ class LoggerManager(FileWriter, FileReader):
         except (Exception, LoggerError):
             Logger.error()
 
-    def __retrieve_file_content(self) -> List[Dict[str, str]]:
+    def __retrieve_file_content(self) -> list[dict[str, str]]:
         """Retrieve the content of the log file associated with
         the instance.
 
@@ -158,14 +148,13 @@ class LoggerManager(FileWriter, FileReader):
 
         Returns:
         --------
-            List[Dict[str, str]]: The content of the log file as a list
+            list[dict[str, str]]: The content of the log file as a list
             of dictionaries.
         """
         FileReader.__init__(self, self.__file_name)
         return self.file_content
-    
-    def _update_content(
-            self, content: Dict[str, str]) -> List[Dict[str, str]]:
+
+    def _update_content(self, content: dict[str, str]) -> list[dict[str, str]]:
         """Update the content of the log file with new log data and
         return the updated content.
 
@@ -177,20 +166,20 @@ class LoggerManager(FileWriter, FileReader):
 
         Parameters:
         -----------
-            content (Dict[str, str]): The log content to be updated or added.
+            content (dict[str, str]): The log content to be updated or added.
 
         Returns:
         --------
-            List[Dict[str, str]]: The updated content of the log file as a
+            list[dict[str, str]]: The updated content of the log file as a
             list of dictionaries.
         """
-        __previous: List[Dict[str, str]] = self.__retrieve_file_content()
+        __previous: list[dict[str, str]] = self.__retrieve_file_content()
         for index, element in enumerate(__previous):
             if element[UUID] == self.__uuid:
                 __previous[index] = content
                 return __previous
         return __previous + [content]
-        
+
     def clear(self) -> None:
         """Clear the contents of the log file."""
         self.__create_folder()  # Create the `LOG_FOLDER` directory.
@@ -208,11 +197,11 @@ class Logger:
         error(self) -> None:
             Print an error message to the console in red text.
     """
-        
+
     @staticmethod
     def error() -> None:
         """Print an error message to the console in red text."""
-        __log_file_name: str = dt.now().strftime(US_DATETIME_FORMAT) + '.log'
+        __log_file_name: str = dt.now().strftime(US_DATETIME_FORMAT) + ".log"
         __log_file: str = join(LOG_FOLDER, __log_file_name)
         basicConfig(filename=__log_file, level=ERROR)
         error(format_exc())

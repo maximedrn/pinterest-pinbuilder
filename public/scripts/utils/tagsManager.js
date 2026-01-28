@@ -1,12 +1,3 @@
-// web/js/utils/tagsManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 import "../common/format.js";
 import { reachableElement } from "../common/reachableElement.js";
 import { stringToElement } from "../common/stringToElement.js";
@@ -25,7 +16,7 @@ import {
  * TagManager class for managing topic tags in a web application.
  */
 export class TagManager {
-    
+
     /**
      * Check if a topic tag with a specific ID is selected.
      *

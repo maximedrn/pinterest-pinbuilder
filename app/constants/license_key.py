@@ -17,7 +17,6 @@ from typing import Final
 
 from app.constants.product_id import PRODUCT_ID
 
-
 # URL of the API for license key verification.
 GUMROAD_API_LICENSE_URL: Final[str] = (
     'http://api.gumroad.com/v2/licenses/verify?product_id=' + str(PRODUCT_ID))

@@ -1,0 +1,99 @@
+[tool.poetry]
+name = "pinterest-pinbuilder"
+version = "1.0.0"
+description = "A tool that automates requests sent to Pinterest servers in order to create new posts on the platform."
+authors = ["Maxime Dréan"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+urllib3 = "^2.6.3"
+requests = "^2.32.5"
+psutil = "^7.2.1"
+pillow = "^12.1.0"
+pyqt6 = { version = "6.10.2", markers = "sys_platform == 'linux' or sys_platform == 'darwin' or (sys_platform == 'win32' and platform_release >= '10')" }
+pyqt5 = { version = "5.15.11", markers = "sys_platform == 'win32' and platform_release < '10'" }
+screeninfo = "^0.8.1"
+colorama = "^0.4.6"
+selenium = "^4.40.0"
+undetected-chromedriver = "^3.5.5"
+webdriver-manager = "^4.0.2"
+eel = "^0.18.2"
+validators = "0.18.2"
+opencv-python = "^4.13.0.90"
+numpy = "^2.4.1"
+setuptools = "^80.10.2"
+
+
+[tool.poetry.group.dev.dependencies]
+black = { extras = ["d"], version = "*" }
+mypy = "^1"
+ruff = "^0.9.4"
+poethepoet = "^0.40.0"
+pyclean = "^3.5.0"
+ansible-lint = "^26.1.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint]
+select = [
+  "E",
+  "F",
+  "ANN",
+  "UP",
+  "N",
+  "C4",
+  "B",
+  "A",
+  "YTT",
+  "W",
+  "FBT",
+  "Q",
+  "RUF",
+  "I",
+]
+fixable = ["N"]
+unfixable = ["B", "RUF"]
+
+[tool.ruff.lint.flake8-annotations]
+allow-star-arg-any = true
+suppress-none-returning = true
+
+[tool.mypy]
+python_version = "3.12"
+disallow_any_generics = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+strict_equality = true
+extra_checks = true
+disallow_any_unimported = true
+disallow_any_expr = true
+disallow_any_decorated = true
+disallow_any_explicit = true
+# plugins = "pydantic.mypy"
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+
+[tool.black]
+line-length = 79
+target-version = ["py312"]
+skip-string-normalization = false

@@ -1,18 +1,9 @@
-// web/js/utils/schemeManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
-import { DARK, FAVICON_PATH, LIGHT } from "./constants/values.js";
 import {
-    FAVICON_ELEMENT, 
     ELEMENT_IFRAME,
-    ELEMENT_SCHEME_MODE_BUTTON
+    ELEMENT_SCHEME_MODE_BUTTON,
+    FAVICON_ELEMENT
 } from "./constants/elements.js";
+import { DARK, FAVICON_PATH, LIGHT } from "./constants/values.js";
 
 
 /**
@@ -82,7 +73,7 @@ function sendSchemeToIframes(schemeMode) {
         // When loading iframes and as soon as the function is called.
         iframe.addEventListener("load", () => message());
         message();
-    } );
+    });
 }
 
 

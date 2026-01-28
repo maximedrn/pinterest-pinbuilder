@@ -1,15 +1,6 @@
-// web/js/utils/worker/workerManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 import { CONSOLE_OUTPUT_PARAGRAPH, CONSOLE_OUTPUT_TITLE } from "../constants/elements.js";
 import { WORKER_FILE } from "../constants/values.js";
-    
+
 
 /**
  * Checks if a worker process is running based on the provided file name.

@@ -1,14 +1,5 @@
-// web/js/utils/headerManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 import { DISABLED } from "./constants/attributes.js";
-import { ELEMENT_HEADER, ELEMENT_NAVIGATION_BUTTON, ICON, ELEMENT_IFRAME } from "./constants/elements.js";
+import { ELEMENT_HEADER, ELEMENT_IFRAME, ELEMENT_NAVIGATION_BUTTON, ICON } from "./constants/elements.js";
 import { ICON_TO_PAGE } from "./constants/values.js";
 import { changeVisibleIframe } from "./iframeManager.js";
 
@@ -60,7 +51,7 @@ export function editHeader() {
  */
 export function responsiveHeaderHeight() {
     const headerElement = document.querySelector(ELEMENT_HEADER);
-    
+
     const editHeaderHeight = () => {
         const headerHeight = headerElement.offsetHeight;
         const iframes = [...document.querySelectorAll(ELEMENT_IFRAME)];

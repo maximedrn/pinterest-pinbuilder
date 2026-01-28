@@ -1,12 +1,3 @@
-// web/js/utils/constants/texts.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 export const ASSETS_LOADING_TEXT = "Loading previews of the assets...";
 export const NO_FOLDER_SELECTED_TEXT = "Please select a folder containing assets to get started.";
 

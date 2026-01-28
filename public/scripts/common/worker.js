@@ -1,15 +1,3 @@
-// web/js/common/worker.js
-
-/**
-@author: Pinterest Pinbuilder.
-
-Telegram: https://t.me/maximedrn
-
-Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
-Any distribution, modification or commercial use is strictly prohibited.
-*/
-
-
 import { FRONTEND_URL } from "../utils/constants/values.js";
 
 

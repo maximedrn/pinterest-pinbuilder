@@ -1,12 +1,3 @@
-// web/js/utils/constants/values.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 import {
     ELEMENT_ALTERNATIVE_TEXT_FIELD,
     ELEMENT_DATETIME_FIELD,
@@ -61,7 +52,7 @@ export const ICON_TO_PAGE = {
 // Invert keys and values from `ICON_TO_PAGE`.
 export const PAGE_TO_ICON = Object.fromEntries(
     Object.entries(ICON_TO_PAGE)
-    .map(([key, value]) => [value, key]));
+        .map(([key, value]) => [value, key]));
 
 // Scheme mode values.
 export const LIGHT = "light";

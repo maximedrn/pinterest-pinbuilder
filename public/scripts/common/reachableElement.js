@@ -1,12 +1,3 @@
-// web/js/common/reachableElement.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 import { DISABLED, UNREACHABLE } from "../utils/constants/attributes.js";
 
 

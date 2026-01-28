@@ -1,13 +1,6 @@
 // web/js/common/stringToElement.js
 
 /**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
-/**
  * Convert a string representation of HTML into a DocumentFragment.
  *
  * @param {string} string - The HTML string to be converted.

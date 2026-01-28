@@ -1,22 +1,13 @@
-// web/js/utils/iframeManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
-import "../common/format.js";
 import { defined } from "../common/defined.js";
-import { setHeaderButtonsState } from "./headerManager.js";
-import { PAGE_TO_ICON, PROCESS_PAGE } from "./constants/values.js";
+import "../common/format.js";
 import {
-    ELEMENT_NAVIGATION_BUTTON,
-    ICON,
     ELEMENT_IFRAME,
-    ELEMENT_IFRAME_SOURCE
+    ELEMENT_IFRAME_SOURCE,
+    ELEMENT_NAVIGATION_BUTTON,
+    ICON
 } from "./constants/elements.js";
+import { PAGE_TO_ICON, PROCESS_PAGE } from "./constants/values.js";
+import { setHeaderButtonsState } from "./headerManager.js";
 
 
 /**
@@ -56,7 +47,7 @@ export function loadPreviousIframe() {
 
     // Change the header buttons state according to the loaded and
     // selected iframe, it depends on the clicked header button.
-    const iframe =  document.querySelector(iframePath);
+    const iframe = document.querySelector(iframePath);
     const headerButtons = [...document.querySelectorAll(ELEMENT_NAVIGATION_BUTTON)];
     iframe.addEventListener("load", () => headerButtons.forEach(button => {
         // Retrieves the current icon and the icon associated with the

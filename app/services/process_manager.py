@@ -1,25 +1,15 @@
-# -*- coding: utf-8 -*-
-# app/services/process_manager.py
-
-
-"""
-@author: Pinterest Pinbuilder.
-
-Github: https://github.com/maximedrn
-Telegram: https://t.me/maximedrn
-
-Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
-Any distribution, modification or commercial use is strictly prohibited.
-"""
-
-
 from __future__ import annotations
+
 from multiprocessing import Process
 from multiprocessing.managers import DictProxy
-from typing import Any, Dict
+from typing import Any
 
 from app.constants.file_settings import (
-    DELETE_TEMP_FILE, FILE_PATH, MAXIMUM_ATTEMPTS, STARTING_VALUE)
+    DELETE_TEMP_FILE,
+    FILE_PATH,
+    MAXIMUM_ATTEMPTS,
+    STARTING_VALUE,
+)
 from app.constants.webdriver import UUID
 from app.services.login.cookie_manager import CookieManager
 from app.services.login.login_process import LoginProcess
@@ -44,7 +34,7 @@ class ProcessManager(UserManager, CookieManager):
         __init__(self, manager: DictProxy) -> None:
             Initialize a CookieManager instance.
 
-        start_upload_process(self, **kwargs: Dict[str, Any]) -> bool:
+        start_upload_process(self, **kwargs: dict[str, Any]) -> bool:
             Start an upload process with the provided keyword arguments.
 
         start_login_process(self) -> bool:
@@ -56,7 +46,7 @@ class ProcessManager(UserManager, CookieManager):
 
     Private methods:
     ----------------
-        __manage_retrieved_cookies(self, uuid: str) -> Dict[str, Any]:
+        __manage_retrieved_cookies(self, uuid: str) -> dict[str, Any]:
             Manage retrieved cookies for a specified UUID.
 
         __int(self, value: Any) -> int:
@@ -81,8 +71,8 @@ class ProcessManager(UserManager, CookieManager):
                 sharing data and managing cookies.
         """
         self.__manager: DictProxy[Any, Any] = manager
-    
-    def __manage_retrieved_cookies(self, uuid: str) -> Dict[str, Any]:
+
+    def __manage_retrieved_cookies(self, uuid: str) -> dict[str, Any]:
         """Manage retrieved cookies for a specified UUID.
 
         This method retrieves cookies associated with the provided UUID and
@@ -97,14 +87,14 @@ class ProcessManager(UserManager, CookieManager):
 
         Returns:
         --------
-            Dict[str, Any]: Valid cookies retrieved for the specified UUID.
+            dict[str, Any]: Valid cookies retrieved for the specified UUID.
         """
-        __cookies: Dict[str, Any] = self.retrieve_cookies_by_id(uuid)
+        __cookies: dict[str, Any] = self.retrieve_cookies_by_id(uuid)
         if not self.verify_cookies_field(__cookies):
             self.start_login_process()
             return self.__manage_retrieved_cookies(uuid)
         return __cookies
-    
+
     def __int(self, value: Any) -> int:
         """Convert a value to an integer if possible, or return 0 if
         conversion is not possible.
@@ -123,13 +113,13 @@ class ProcessManager(UserManager, CookieManager):
             conversion is not possible.
         """
         return int(value) if str(value).isdigit() else 0
-        
-    def start_upload_process(self, **kwargs: Dict[str, Any]) -> bool:
+
+    def start_upload_process(self, **kwargs: dict[str, Any]) -> bool:
         """Start an upload process with the provided keyword arguments.
 
         Parameters:
         -----------
-            **kwargs (Dict[str, Any]): Keyword arguments containing the
+            **kwargs (dict[str, Any]): Keyword arguments containing the
                 necessary data for the upload process.
 
         Returns:
@@ -138,17 +128,21 @@ class ProcessManager(UserManager, CookieManager):
         """
         __uuid: Any = kwargs[UUID]  # Get the account UUID, and
         # retrieve cookies from the file or from a Pinterest login process.
-        cookies: Dict[str, Any] =  self.__manage_retrieved_cookies(__uuid)
+        cookies: dict[str, Any] = self.__manage_retrieved_cookies(__uuid)
         # Send the required values used to run the upload process.
         __file_path: str = str(kwargs[FILE_PATH])
         __starting_value: int = self.__int(kwargs[STARTING_VALUE])
         __maximum_attempts: int = self.__int(kwargs[MAXIMUM_ATTEMPTS])
         __delete_temp_file: bool = bool(kwargs[DELETE_TEMP_FILE])
         self.__thread: Process | None = UploadProcess(
-            __file_path, __starting_value, __maximum_attempts,
-            __delete_temp_file, cookies)()
+            __file_path,
+            __starting_value,
+            __maximum_attempts,
+            __delete_temp_file,
+            cookies,
+        )()
         return True  # The process is successfully started.
-    
+
     def start_login_process(self) -> bool:
         """Start the login process as a separate thread.
 
@@ -164,7 +158,7 @@ class ProcessManager(UserManager, CookieManager):
         """
         self.__thread: Process | None = LoginProcess(self.__manager)()
         return True
-    
+
     def stop_process(self, log_file_name: str) -> None:
         """Terminate the currently running process and clear the
         associated log.

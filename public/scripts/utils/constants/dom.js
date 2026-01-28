@@ -1,12 +1,3 @@
-// web/js/utils/constants/doms.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 export const SNACKBAR_HTML_ELEMENT = `
     <section class="snackbar__element" data-uuid="{}">
         <i class="icon__material icon__large"></i>

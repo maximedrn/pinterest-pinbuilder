@@ -1,14 +1,5 @@
-// web/js/common/noTranslate.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
-import { ICON } from "../utils/constants/elements.js";
 import { NO_TRANSLATE } from "../utils/constants/attributes.js";
+import { ICON } from "../utils/constants/elements.js";
 
 
 /**

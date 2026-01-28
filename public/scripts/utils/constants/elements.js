@@ -1,12 +1,3 @@
-// web/js/utils/constants/elements.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 export const ICON = "i";
 export const IMAGE = "img";
 export const FAVICON_ELEMENT = "#favicon";
@@ -30,32 +21,6 @@ export const ELEMENT_IFRAME_SOURCE = ELEMENT_IFRAME + "[src*=\"{}\"]";
 export const ELEMENT_HEADER = "header";
 export const ELEMENT_NAVIGATION_BUTTON = "header>nav>section";
 export const ELEMENT_SCHEME_MODE_BUTTON = ".scheme-mode__button";
-
-// License key popup container.
-export const CONTAINER_LICENSE_KEY = ".container__license-key";
-export const ELEMENT_LICENSE_KEY_CLOSE = CONTAINER_LICENSE_KEY + " .container__popup-close";
-export const ELEMENT_LICENSE_KEY_INPUT = CONTAINER_LICENSE_KEY + " .container__input input";
-export const ELEMENT_LICENSE_KEY_BUTTON = CONTAINER_LICENSE_KEY + " .button__large";
-
-// License key header container.
-export const CONTAINER_LICENSE_KEY_TEXT = ".license-key__header-text"
-export const ELEMENT_LICENSE_KEY_DISABLE_TEXT = CONTAINER_LICENSE_KEY_TEXT + " p:first-child";
-export const ELEMENT_LICENSE_KEY_ENABLE_TEXT = CONTAINER_LICENSE_KEY_TEXT + " p:last-child";
-
-// Update and changelog popup.
-export const CONTAINER_UPDATE = ".container__update";
-export const ELEMENT_UPDATE_CLOSE = CONTAINER_UPDATE + " .container__popup-close";
-export const ELEMENT_UPDATE_BUTTON = CONTAINER_UPDATE + " .button__large";
-export const ELEMENT_UPDATE_CHANGELOG = CONTAINER_UPDATE + " .container__changelog";
-export const ELEMENT_UPDATE_CHANGELOG_LIST = ELEMENT_UPDATE_CHANGELOG + " ul";
-
-// Information popup.
-export const ELEMENT_INFORMATION_BUTTON = ".information__button";
-export const CONTAINER_INFORMATION = ".container__information";
-export const ELEMENT_INFORMATION_CLOSE = CONTAINER_INFORMATION + " .container__popup-close";
-export const CONTAINER_VERSION = ".container__version";
-export const ELEMENT_VERSION_TEXT = CONTAINER_VERSION + ">span:last-child";
-
 
 /**
  * Process page elements.

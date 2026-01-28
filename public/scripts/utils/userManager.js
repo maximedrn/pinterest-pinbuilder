@@ -1,22 +1,10 @@
-// web/js/utils/userManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
-import "../common/format.js";
 import { timeStampToDatetime } from "../common/datetime.js";
-import { stringToElement } from "../common/stringToElement.js"
-import { startLogWorker, stopLogWorker } from "./worker/workerManager.js";
-import { displayConsoleOutputs } from "./worker/consoleManager.js";
+import "../common/format.js";
+import { stringToElement } from "../common/stringToElement.js";
 import { displayMessage } from "../utils/worker/snackbarManager.js";
 import { checkboxEvent } from "./checkboxManager.js";
-import { ACCOUNT_HTML_ELEMENT } from "./constants/dom.js";
 import { SELECTED } from "./constants/attributes.js";
-import { LOGIN_FILE } from "./constants/values.js";
+import { ACCOUNT_HTML_ELEMENT } from "./constants/dom.js";
 import {
     CONTAINER_ACCOUNTS,
     ELEMENT_ACCOUNT,
@@ -24,6 +12,9 @@ import {
     ELEMENT_LOGIN_BUTTON,
     ELEMENT_UPLOAD_BUTTON
 } from "./constants/elements.js";
+import { LOGIN_FILE } from "./constants/values.js";
+import { displayConsoleOutputs } from "./worker/consoleManager.js";
+import { startLogWorker, stopLogWorker } from "./worker/workerManager.js";
 
 
 export class LoginManager {
@@ -46,16 +37,16 @@ export class LoginManager {
     async retrieveSavedUsers() {
         const usersList = await eel.retrieve_users_data()();
         const accountContainer = document.querySelector(CONTAINER_ACCOUNTS);
-        
+
         // Remove all the account elements except the first one.
         const accountElements = [...accountContainer.children];
         accountElements.slice(1).forEach(accountElement => accountElement.remove());
-        
+
         usersList.forEach(([username, uuid, image_url, timestamp]) => {
             const datetime = timeStampToDatetime(timestamp);
             const userElementString = ACCOUNT_HTML_ELEMENT.format(
                 image_url, username, uuid, username, datetime);
-    
+
             const userElement = stringToElement(userElementString);
             accountContainer.appendChild(userElement);
         });

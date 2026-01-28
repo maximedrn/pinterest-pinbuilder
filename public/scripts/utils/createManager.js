@@ -1,52 +1,43 @@
-// web/js/utils/createManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
-import "../common/format.js";
 import { defined } from "../common/defined.js";
-import { displayMessage } from "../utils/worker/snackbarManager.js";
+import "../common/format.js";
 import { reachableElement } from "../common/reachableElement.js";
-import { startLogWorker, stopLogWorker } from "./worker/workerManager.js";
-import { snackbarMessage } from "./worker/snackbarManager.js";
-import { TagManager } from "./tagsManager.js";
+import { displayMessage } from "../utils/worker/snackbarManager.js";
 import { CHECKED, FIELD_REQUIRED } from "./constants/attributes.js";
-import { DATA_FILES_KEYS, CREATE_FILE, TOPIC_TAGS, PAID_PIN } from "./constants/values.js";
 import {
-    ASSETS_LOADING_TEXT,
-    NO_FOLDER_SELECTED_TEXT,
-    NUMBER_OF_ASSETS,
-    BASE_64
-} from "./constants/texts.js";
-import {
+    CONTAINER_ASSETS_ACTION_BUTTONS,
+    CONTAINER_ASSETS_LIST,
+    CONTAINER_BROWSED_ASSETS_FOLDER_TEXT,
     ELEMENT_APPLY_FOR_ALL_BUTTON,
     ELEMENT_ASSETS_FOLDER_CLEAR,
-    CONTAINER_ASSETS_LIST,
+    ELEMENT_ASSETS_PREVIEW,
     ELEMENT_BROWSED_ASSETS_FOLDER_BUTTON,
+    ELEMENT_BROWSED_ASSETS_FOLDER_TEXT,
+    ELEMENT_CREATE_FIELDS,
     ELEMENT_LOADING_ASSETS,
     ELEMENT_LOADING_ASSETS_TEXT,
-    ELEMENT_SAVE_BUTTON,
-    ELEMENT_BROWSED_ASSETS_FOLDER_TEXT,
-    CONTAINER_BROWSED_ASSETS_FOLDER_TEXT,
-    ELEMENT_CREATE_FIELDS,
+    ELEMENT_NEXT_ASSET_BUTTON,
+    ELEMENT_NEXT_CHUNK_BUTTON,
+    ELEMENT_ORGANIC_PIN,
+    ELEMENT_PAID_PIN,
+    ELEMENT_PIN_TYPE_TOGGLE,
+    ELEMENT_PINBOARD_FIELD,
+    ELEMENT_PREVIOUS_ASSET_BUTTON,
+    ELEMENT_PREVIOUS_CHUNK_BUTTON,
     ELEMENT_REMOVE_BY_INDEX_BUTTON,
     ELEMENT_REMOVE_FOR_ALL_BUTTON,
-    IMAGE,
-    ELEMENT_NEXT_CHUNK_BUTTON,
-    ELEMENT_ASSETS_PREVIEW,
-    ELEMENT_PREVIOUS_CHUNK_BUTTON,
-    CONTAINER_ASSETS_ACTION_BUTTONS,
-    ELEMENT_PREVIOUS_ASSET_BUTTON,
-    ELEMENT_NEXT_ASSET_BUTTON,
-    ELEMENT_PAID_PIN,
-    ELEMENT_ORGANIC_PIN,
-    ELEMENT_PIN_TYPE_TOGGLE,
-    ELEMENT_PINBOARD_FIELD
+    ELEMENT_SAVE_BUTTON,
+    IMAGE
 } from "./constants/elements.js";
+import {
+    ASSETS_LOADING_TEXT,
+    BASE_64,
+    NO_FOLDER_SELECTED_TEXT,
+    NUMBER_OF_ASSETS
+} from "./constants/texts.js";
+import { CREATE_FILE, DATA_FILES_KEYS, PAID_PIN, TOPIC_TAGS } from "./constants/values.js";
+import { TagManager } from "./tagsManager.js";
+import { snackbarMessage } from "./worker/snackbarManager.js";
+import { startLogWorker, stopLogWorker } from "./worker/workerManager.js";
 
 /**
  * CreateManager class manages the creation of objects with pins.
@@ -433,7 +424,7 @@ export class CreateManager extends TagManager {
                     this.#editEditionState(false);
                     return;
                 }
-                
+
                 imageElement.setAttribute(CHECKED, "");
                 // Update the selected pin index and display the the data.
                 this._selected_pin = images.indexOf(imageElement);
@@ -461,7 +452,7 @@ export class CreateManager extends TagManager {
             const [selectedFolder, numberOfAssets] = await eel.browse_folder()();
             // Check if the selected folder or number of assets is missing.
             if (!selectedFolder || !numberOfAssets) return;
-            
+
             const [isValid, errorMessage] = await eel.start_creation_manager(
                 selectedFolder)(); // Start the creation manager and check its validity.
             if (!isValid) { // If the creation manager is not valid,

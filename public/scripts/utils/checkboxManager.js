@@ -1,12 +1,3 @@
-// web/js/utils/checkboxManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 import { CHECKED } from "./constants/attributes.js";
 
 

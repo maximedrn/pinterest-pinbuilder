@@ -1,28 +1,19 @@
-// web/js/utils/uploadManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 import { displayMessage } from "../utils/worker/snackbarManager.js";
-import { startLogWorker, stopLogWorker } from "./worker/workerManager.js";
-import { displayConsoleOutputs } from "./worker/consoleManager.js";
-import { SELECTED, PROCESS_STARTED } from "./constants/attributes.js";
-import { DATA_FILE, UPLOAD_FILE, UUID } from "./constants/values.js";
-import { SNACKBAR_CANNOT_BE_EMPTY, START_TEXT, STOP_TEXT } from "./constants/texts.js";
+import { PROCESS_STARTED, SELECTED } from "./constants/attributes.js";
 import {
-    ELEMENT_MAXIMUM_ATTEMPTS,
     ELEMENT_BROWSED_FILE,
     ELEMENT_DELETE_TEMP_FILE,
+    ELEMENT_MAXIMUM_ATTEMPTS,
     ELEMENT_SELECTED_ACCOUNT,
     ELEMENT_SELECTED_FILE,
     ELEMENT_STARTING_VALUE,
     ELEMENT_UPLOAD_BUTTON,
     ELEMENT_UPLOAD_BUTTON_TEXT
 } from "./constants/elements.js";
+import { SNACKBAR_CANNOT_BE_EMPTY, START_TEXT, STOP_TEXT } from "./constants/texts.js";
+import { DATA_FILE, UPLOAD_FILE, UUID } from "./constants/values.js";
+import { displayConsoleOutputs } from "./worker/consoleManager.js";
+import { startLogWorker, stopLogWorker } from "./worker/workerManager.js";
 
 
 /**
@@ -77,13 +68,13 @@ export class UploadManager {
             "Starting value": startingValue,
             "Number of attempts": maximumAttempts
         }
-    
+
         // Check each required field value and return a boolean according
         // if one of them is missing or not, and the field values.
         for (const [fieldName, value] of Object.entries(requiredFields)) {
             if (value) continue; // The value exists.
             // The value does not exist, display an error and return false.
-            displayMessage(fieldName + SNACKBAR_CANNOT_BE_EMPTY); 
+            displayMessage(fieldName + SNACKBAR_CANNOT_BE_EMPTY);
             return [false, []];
         }
 

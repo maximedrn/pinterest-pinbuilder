@@ -1,35 +1,20 @@
-# -*- coding: utf-8 -*-
-# app/utils/pid_manager.py
-
-
-"""
-@author: Pinterest Pinbuilder.
-
-Github: https://github.com/maximedrn
-Telegram: https://t.me/maximedrn
-
-Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
-Any distribution, modification or commercial use is strictly prohibited.
-"""
-
-
 from __future__ import annotations
+
 from multiprocessing.managers import DictProxy
 from os import kill
-from psutil import Process, process_iter
 from signal import SIGTERM
-from typing import Any, List
+from typing import Any
 
+from psutil import Process, process_iter
 from undetected_chromedriver import Chrome
 
 from app.constants.messages import PROCESS_HALTED
 from app.constants.paths import FRONTEND_PORT
 from app.constants.processes import MANAGER_PROCESSES
 from app.utils.exceptions import KillListenerProcessError, KillProcessError
-from app.utils.logger.logger_manager import Logger
 
 
-def save_processes(driver: Chrome) -> List[int]:
+def save_processes(driver: Chrome) -> list[int]:
     """Save the process IDs related to the WebDriver session.
 
     Parameters:
@@ -38,17 +23,26 @@ def save_processes(driver: Chrome) -> List[int]:
 
     Returns:
     --------
-        List[int]: A list of process IDs.
+        list[int]: A list of process IDs.
     """
-    __sub_processes: List[Any | int] = [
-        driver.browser_pid, driver.service.process.pid]
-    return [*__sub_processes, *[process.pid for process in Process(
-        driver.service.process.pid).children(recursive=True)]]
+    __sub_processes: list[Any | int] = [
+        driver.browser_pid,
+        driver.service.process.pid,
+    ]
+    return [
+        *__sub_processes,
+        *[
+            process.pid
+            for process in Process(driver.service.process.pid).children(
+                recursive=True
+            )
+        ],
+    ]
 
 
 def kill_processes(manager: DictProxy[Any, Any]) -> None:
     """Kill the processes specified in the manager.
-    
+
     The `MANAGER_PROCESSES` key in the '`manager` dictionary should hold a
     list of process IDs (integers) to be terminated. This function iterates
     through a copy of the processes, attempts to kill each process, and
@@ -72,18 +66,20 @@ def kill_processes(manager: DictProxy[Any, Any]) -> None:
 
 def kill_listener_processes() -> None:
     """Kill listener processes associated with a specific port.
-    
+
     This function is used to stop listener processes
     running on a specific port.
     """
     for process in process_iter():  # Iterate through all active processes.
         try:  # The exception may occur when `terminate()` is called.
-            for connection in process.connections(kind='inet'):
+            for connection in process.connections(kind="inet"):
                 # Check that the port used by the process is one of the tool.
                 if connection.laddr.port == FRONTEND_PORT:
                     process.terminate()  # Stop the process.
-                    print(PROCESS_HALTED.format(  # Display its information.
-                        name=process.name(), pid=process.pid))
+                    print(
+                        PROCESS_HALTED.format(  # Display its information.
+                            name=process.name(), pid=process.pid
+                        )
+                    )
         except (Exception, KillListenerProcessError):
-            # Logger.error()  # Display the exception error.
             continue  # The process cannot be terminated.

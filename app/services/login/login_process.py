@@ -1,18 +1,3 @@
-# -*- coding: utf-8 -*-
-# app/services/login/login_process.py
-
-
-"""
-@author: Pinterest Pinbuilder.
-
-Github: https://github.com/maximedrn
-Telegram: https://t.me/maximedrn
-
-Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
-Any distribution, modification or commercial use is strictly prohibited.
-"""
-
-
 from multiprocessing import Process
 from multiprocessing.managers import DictProxy
 from typing import Any, Callable
@@ -31,7 +16,7 @@ class LoginProcess(LoginManager, ThreadManager):
     --------
         __init__(self, manager: DictProxy) -> None:
             Initialize a LoginProcess instance with a manager for shared data.
-    
+
         __call__(self) -> Process:
             Initialize and start the login process in a separate thread.
 
@@ -40,7 +25,7 @@ class LoginProcess(LoginManager, ThreadManager):
         __manager (DictProxy[Any, Any]): A multiprocessing manager for
             sharing data and managing cookies.
     """
-    
+
     def __init__(self, manager: DictProxy) -> None:
         """Initialize a LoginProcess instance with a manager for shared data.
 

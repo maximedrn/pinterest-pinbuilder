@@ -1,25 +1,11 @@
-# -*- coding: utf-8 -*-
-# app/common/file_manager.py
-
-
-"""
-@author: Pinterest Pinbuilder.
-
-Github: https://github.com/maximedrn
-Telegram: https://t.me/maximedrn
-
-Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
-Any distribution, modification or commercial use is strictly prohibited.
-"""
-
-
 from __future__ import annotations
+
 from datetime import datetime as dt
 from json import loads
 from os.path import basename, dirname, exists, join
 from pathlib import Path
 from shutil import copy2
-from typing import Any, Dict, List
+from typing import Any
 
 from app.common.file_reader import FileReader
 from app.common.file_writer import FileWriter
@@ -38,10 +24,10 @@ class FileManager(FileReader):
     --------
         generate_name_for_file() -> str:
             Generate a unique name for a file based on the current datetime.
-            
+
         add_index_to_file(file_path: str) -> str:
             Append an index to a file path to make it unique.
-    
+
         remove_element_from_file(self, index: int) -> None:
             Remove an element from the temporary file.
 
@@ -50,7 +36,7 @@ class FileManager(FileReader):
 
         delete_temporary_file(self) -> None:
             Delete the temporary file if it exists.
-    
+
     Private methods:
     ----------------
         __create_temporary_file(self) -> None:
@@ -62,11 +48,11 @@ class FileManager(FileReader):
         __temp_file (str): The path to the temporary file.
         __remove_element_attempt (int): Counter for
             `remove_element_from_file()` attempts.
-            
+
     """
-    
-    Content = Dict[str, List[Dict[str, Any]]]
-    
+
+    Content = dict[str, list[dict[str, Any]]]
+
     def __init__(self, file_path: str, delete_temp_file: bool) -> None:
         """Initialize a FileManager instance with the specified data file.
 
@@ -84,13 +70,13 @@ class FileManager(FileReader):
         self.__remove_element_attempt: int = 0
         self.__create_temporary_file(delete_temp_file)
         super().__init__(self.__temp_file)
-        
+
     def __create_temporary_file(self, delete_temp_file: bool) -> None:
         """Create a temporary file if it does not exist.
-        
+
         It copies the initial file into the temporary folder
         if it is not already done.
-        
+
         Parameters:
         -----------
             delete_temp_file (bool): Let the process start from scratch
@@ -100,7 +86,7 @@ class FileManager(FileReader):
         # Copy the initial file if it is not present in the temporary folder.
         if not exists(self.__temp_file) or delete_temp_file:
             copy2(self.__file_path, self.__temp_file)
-            
+
     @staticmethod
     def generate_name_for_file() -> str:
         """Generate a unique name for a file based on the current datetime.
@@ -115,8 +101,8 @@ class FileManager(FileReader):
             '2023-09-14 15-30-45.json'
         """
         __current_datetime: str = dt.now().strftime(US_DATETIME_FORMAT)
-        return __current_datetime + '.json'
-    
+        return __current_datetime + ".json"
+
     @staticmethod
     def add_index_to_file(file_path: str) -> str:
         """Append an index to a file path to make it unique.
@@ -137,14 +123,13 @@ class FileManager(FileReader):
         """
         __file_path: Path = Path(file_path)
         __folder: Path = __file_path.parent
-        __file_name: str = __file_path.stem + '_{}' + __file_path.suffix
+        __file_name: str = __file_path.stem + "_{}" + __file_path.suffix
         index: int = 0  # The index that will be added for the file.
         while Path(__file_path).exists() and (index := index + 1):
             __current_file_name: str = __file_name.format(index)
             __file_path: Path = __folder.joinpath(__current_file_name)
         return str(__file_path.name)
-        
-    
+
     def remove_element_from_file(self, index: int) -> None:
         """Remove an element from the temporary file.
 
@@ -156,7 +141,7 @@ class FileManager(FileReader):
         try:  # Attempt to remove the item from the temporary file.
             file_reader: FileReader = FileReader(self.__temp_file)
             temp_file_length: int = file_reader.file_length
-            temp_file_content: List[Dict[str, Any]] = file_reader.file_content
+            temp_file_content: list[dict[str, Any]] = file_reader.file_content
             # Note: `index` increases but the temp file length decrease.
             # Thus it is required to subtract from `index` the difference
             # between the file length and the temp file length.
@@ -168,7 +153,7 @@ class FileManager(FileReader):
                 return self.remove_element_from_file(index)
             Console(UPLOAD_PROCESS, INTERNAL).error(TEMP_REMOVE_ERROR)
             self.__remove_element_attempt: int = 0
-    
+
     def check_temporary_file_content(self) -> bool:
         """Check if the temporary file contains content.
 
@@ -179,10 +164,10 @@ class FileManager(FileReader):
         """
         if not exists(self.__temp_file):
             return False  # The temporary file does not exist.
-        with open(self.__temp_file, 'r', encoding='utf-8') as file:
+        with open(self.__temp_file, "r", encoding="utf-8") as file:
             content: FileManager.Content = loads(file.read())
         return bool(content)
-    
+
     def delete_temporary_file(self) -> None:
         """Delete the temporary file if it exists."""
         Path(self.__temp_folder).unlink(missing_ok=True)

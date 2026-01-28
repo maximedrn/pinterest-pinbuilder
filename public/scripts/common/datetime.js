@@ -1,13 +1,6 @@
 // web/js/common/datetime.js
 
 /**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
-/**
  * Formats a date as "DD/MM/YYYY" with an optional number of added days.
  *
  * @param {Date} datetime - The date to format.

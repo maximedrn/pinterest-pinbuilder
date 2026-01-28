@@ -1,26 +1,7 @@
-# -*- coding: utf-8 -*-
-# app/constants/version.py
-
-
-"""
-@author: Pinterest Pinbuilder.
-
-Github: https://github.com/maximedrn
-Telegram: https://t.me/maximedrn
-
-Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
-Any distribution, modification or commercial use is strictly prohibited.
-"""
-
-
 from os import name
 from platform import platform, release, system
 from sys import version
 from typing import Final
-
-
-# Latest version of the tool.
-TOOL_VERSION: Final[str] = '1.1.6.1'
 
 # Current Python version.
 PYTHON_VERSION: Final[str] = version
@@ -31,5 +12,5 @@ OPERATING_SYSTEM_NAME: Final[str] = system()
 OPERATING_SYSTEM_ALT: Final[str] = name
 SYSTEM_VERSION: Final[str] = release()
 
-WINDOWS: Final[str] = 'nt'
-MACOS: Final[str] = 'posix'
+WINDOWS: Final[str] = "nt"
+MACOS: Final[str] = "posix"

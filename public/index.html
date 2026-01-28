@@ -1,194 +1,62 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Pinterest Pinbuilder</title>
-        <link rel="icon" type="image/png" href="./assets/favicon-light.png?v=2" id="favicon">
-        <link rel="stylesheet" href="./styles/styles.css">
-        <link rel="stylesheet" href="./styles/pages/index.css">
-        <!-- Do not remove this. Prevent local server to crash. -->
-        <!-- https://github.com/ChrisKnott/Eel/issues/268#issuecomment-647299184 -->
-        <script type="text/javascript" src="/eel.js"></script>
-        <script type="module" src="./scripts/pages/index.js" defer></script>
-    </head>
 
-    <body >
-        <header class="container__column container__gap-medium">
-            <section class="license-key__header-text">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pinterest Pinbuilder</title>
+    <link rel="icon" type="image/png" href="./assets/favicon-light.png?v=2" id="favicon">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/pages/index.css">
+    <!-- Do not remove this. Prevent local server to crash. -->
+    <!-- https://github.com/ChrisKnott/Eel/issues/268#issuecomment-647299184 -->
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="module" src="./scripts/pages/index.js" defer></script>
+</head>
+
+<body>
+    <header class="container__column container__gap-medium">
+        <nav class="container__row">
+            <section type="button" class="container__column">
+                <i class="icon__material icon__large">article</i>
+                <h1>Upload</h1>
+                <p>Select one of your created files, log in to a Pinterest account and bulk upload your Pins.</p>
+            </section>
+
+            <section type="button" class="container__column">
+                <i class="icon__material icon__large">construction</i>
+                <h1>Create</h1>
+                <p>Import images, add titles, descriptions, external links and more; and generate a file.</p>
+            </section>
+
+            <section type="button" class="container__column" style="pointer-events: none;">
+                <i class="icon__material icon__large">search</i>
+                <h1>Scrape
+                    <sup class="feature__soon"></sup>
+                </h1>
                 <p>
-                    The tool has not been activated, <a>please enter your license key</a>.
-                </p>
-                <p style="display: none;">
-                    The tool has been activated. <a>Change or add a license key</a>.
+                    Scrape Pins according to keywords and upload them
+                    with the information you want.
                 </p>
             </section>
 
-            <nav class="container__row">
-                <section type="button" class="container__column">
-                    <i class="icon__material icon__large">article</i>
-                    <h1>Upload</h1>
-                    <p>Select one of your created files, log in to a Pinterest account and bulk upload your Pins.</p>
+            <aside class="container__column">
+                <section type="button" title="Change theme" class="scheme-mode__button">
+                    <i class="icon__material icon__large"></i>
                 </section>
+            </aside>
+        </nav>
+    </header>
 
-                <section type="button" class="container__column">
-                    <i class="icon__material icon__large">construction</i>
-                    <h1>Create</h1>
-                    <p>Import images, add titles, descriptions, external links and more; and generate a file.</p>
-                </section>
+    <main>
+        <iframe frameborder="0" src="./process.html" style="display: none;"></iframe>
+        <iframe frameborder="0" src="./create.html" style="display: none;"></iframe>
+    </main>
 
-                <section type="button" class="container__column" style="pointer-events: none;">
-                    <i class="icon__material icon__large">search</i>
-                    <h1>Scrape
-                        <sup class="feature__soon"></sup>
-                    </h1>
-                    <p>
-                        Scrape Pins according to keywords and upload them 
-                        with the information you want.
-                    </p>
-                </section>
+    <section class="snackbar__container container__column container__gap-small"></section>
+</body>
 
-                <aside class="container__column">
-                    <section type="button" title="Change theme" class="scheme-mode__button">
-                        <i class="icon__material icon__large"></i>
-                    </section>
-                    <section type="button" title="Information" class="information__button">
-                        <i class="icon__material icon__large">help</i>
-                    </section>
-                </aside>
-            </nav>
-        </header>
-
-        <main>
-            <iframe frameborder="0" src="./process.html" style="display: none;"></iframe>
-            <iframe frameborder="0" src="./create.html" style="display: none;"></iframe>
-
-            <section class="container__popup-background container__update" style="display: none;">
-                <section class="container__column container__gap-medium container__popup">
-                    <section type="button" title="Close the popup" class="container__popup-close">
-                        <i class="icon__material icon__large">close</i>
-                    </section>
-                    
-                    <section>
-                        <h1>A new update has been released!</h1>
-                        <p class="text__block">
-                            If you have lost the download link, contact me with your email 
-                            address. I will send you the receipt as soon as possible.
-                        </p>
-                    </section>
-
-                    <article class="container__changelog">
-                        <ul></ul>
-                    </article>
-
-                    <section type="button" class="button__large">
-                        <span>Download the update</span>
-                    </section>
-                </section>
-            </section>
-
-            <section class="container__popup-background container__license-key" style="display: none;">
-                <section class="container__column container__gap-medium container__popup">
-                    <section type="button" title="Close the popup" class="container__popup-close">
-                        <i class="icon__material icon__large">close</i>
-                    </section>
-
-                    <section>
-                        <h1>What is your license key?</h1>
-                        <p class="text__block">
-                            You must confirm that you have a valid license key. 
-                            Please paste it below.
-                        </p>
-                    </section>
-
-                    <section class="container__input">
-                        <input type="text" name="license-key"
-                            placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX">
-                    </section>
-
-                    <section type="button" class="button__large">
-                        <span>Confirm the license key</span>
-                    </section>
-                </section>
-            </section>
-
-            <section class="container__popup-background container__information" style="display: none;">
-                <section class="container__column container__gap-medium container__popup">
-                    <section type="button" title="Close the popup" class="container__popup-close">
-                        <i class="icon__material icon__large">close</i>
-                    </section>
-
-                    <section>
-                        <h1>Information and useful links</h1>
-                        <p class="text__block">
-                            Below you'll find all the contact forms available, 
-                            as well as information about the tool.
-                        </p>
-                    </section>
-
-                    <section class="container__column container__gap-small container__contact">
-                        <a type="button" class="container__row container__gap-medium"
-                            href="mailto:maxime_drean@yahoo.com" target="_blank">
-                            <img src="assets/yahoo.png">
-                            <section class="container__column">
-                                <span>Email</span>
-                                <span>maxime_drean@yahoo.com</span>
-                            </section>
-                        </a>
-                        <a type="button" class="container__row container__gap-medium"
-                            href="https://forms.gle/9km3qPYx8ETi6jdH8"
-                            target="_blank">
-                            <img src="assets/forms.png" class="image__no-invert">
-                            <section class="container__column">
-                                <span>Google Forms</span>
-                                <span>https://forms.gle/9km3qPYx8ETi6jdH8</span>
-                            </section>
-                        </a>
-                        <a type="button" class="container__row container__gap-medium"
-                            href="https://fiverr.com/maximedrn" target="_blank">
-                            <img src="assets/fiverr.png">
-                            <section class="container__column">
-                                <span>Fiverr</span>
-                                <span>https://fiverr.com/maximedrn</span>
-                            </section>
-                        </a>
-                        <a type="button" class="container__row container__gap-medium"
-                            href="https://t.me/maximedrn" target="_blank">
-                            <img src="assets/telegram.svg" class="image__no-invert">
-                            <section class="container__column">
-                                <span>Telegram</span>
-                                <span>https://t.me/maximedrn</span>
-                            </section>
-                        </a>
-                        <a type="button" class="container__row container__gap-medium"
-                            href="https://t.me/pinterest_pinbuilder" target="_blank">
-                            <img src="assets/telegram.svg" class="image__no-invert">
-                            <section class="container__column">
-                                <span>Telegram group</span>
-                                <span>https://t.me/pinterest_pinbuilder</span>
-                            </section>
-                        </a>
-                        <a type="button" class="container__row container__gap-medium"
-                            href="https://maximedrn.gumroad.com/affiliates" target="_blank">
-                            <img src="assets/favicon-light.png">
-                            <section class="container__column">
-                                <span>Become an affiliate</span>
-                                <span>Promote the tool and earn commissions!</span>
-                            </section>
-                        </a>
-                    </section>
-
-                    <section class="container__row container__gap-small container__version">
-                        <span>Version of the tool:</span>
-                        <span></span>
-                    </section>
-                </section>
-            </section>
-        </main>
-        
-        <section class="snackbar__container container__column container__gap-small"></section>
-    </body>
 </html>

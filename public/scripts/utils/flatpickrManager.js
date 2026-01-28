@@ -1,16 +1,7 @@
-// web/js/utils/flatpickrManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 import { datetimeFormat } from "../common/datetime.js";
-import { 
-    DATA_FILES_KEYS, 
-    FLATPICKR_FORMAT, 
+import {
+    DATA_FILES_KEYS,
+    FLATPICKR_FORMAT,
     MAXIMUM_SCHEDULE_DAYS
 } from "./constants/values.js";
 

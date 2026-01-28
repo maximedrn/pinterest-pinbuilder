@@ -1,21 +1,12 @@
-// web/js/utils/worker/snackbarManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 import "../../common/format.js";
 import { stringToElement } from "../../common/stringToElement.js";
 import { SHOW } from "../constants/attributes.js";
 import { SNACKBAR_HTML_ELEMENT } from "../constants/dom.js";
 import {
-    ELEMENT_SNACKBAR_UUID,
+    CONTAINER_SNACKBAR,
     ELEMENT_SNACKBAR_ICON,
     ELEMENT_SNACKBAR_TEXT,
-    CONTAINER_SNACKBAR
+    ELEMENT_SNACKBAR_UUID
 } from "../constants/elements.js";
 
 
@@ -73,7 +64,7 @@ function displaySnackbar(message) {
  * required value.
  */
 export function displayMessage(message) {
-    displaySnackbar({message: message});
+    displaySnackbar({ message: message });
 }
 
 /**

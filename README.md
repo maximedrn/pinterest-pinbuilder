@@ -1,4 +1,18 @@
-# pinterest-pinbuilder
-Pinterest Pinbuilder is a tool that automates requests made to Pinterest servers. The tool simulates the actions you would take manually from their website. The tool has an elegant, simple and easy-to-use interface. Anyone with little experience will be able to use the tool with ease.
+# Pinterest Pinbuilder
 
-All you have to do is select your images and videos and customize them by adding any information you wish. Then log in to a new account, or select one you've already added. Finally, start the Pin creation process.
+_This project is no longer maintained and is provided as is._
+
+This Python-based tool features a comprehensive interface designed to automate requests to Pinterest servers for creating new posts on the platform. It operates through a web driver that simulates real user interactions within a web browser, effectively mimicking standard Pinterest usage.
+
+## Prerequisites
+
+- Python 3.12+
+- [Poetry](https://python-poetry.org/)
+
+## Installation
+
+```bash
+poetry install
+poetry shell
+python main.py
+```

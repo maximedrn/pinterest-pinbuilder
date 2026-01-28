@@ -1,12 +1,11 @@
-// web/js/pages/process.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
+import { noTranslate } from "../common/noTranslate.js";
+import { PROCESS_STARTED } from "../utils/constants/attributes.js";
+import {
+    ELEMENT_UPLOAD_BUTTON,
+    ELEMENT_UPLOAD_BUTTON_TEXT
+} from "../utils/constants/elements.js";
+import { START_TEXT, STOP_TEXT } from "../utils/constants/texts.js";
+import { SCHEME_MODES, UPLOAD_FILE } from "../utils/constants/values.js";
 import {
     browseDataFile,
     dataFileSelection,
@@ -14,18 +13,10 @@ import {
     reloadDataFilesList
 } from "../utils/dataFilesManager.js";
 import { setSchemeMode } from "../utils/schemeManager.js";
-import { isWorkerRunning } from "../utils/worker/workerManager.js";
-import { noTranslate } from "../common/noTranslate.js";
 import { UploadManager } from "../utils/uploadManager.js";
 import { LoginManager } from "../utils/userManager.js";
 import { displayConsoleOutputs } from "../utils/worker/consoleManager.js";
-import { UPLOAD_FILE, SCHEME_MODES } from "../utils/constants/values.js";
-import { START_TEXT, STOP_TEXT } from "../utils/constants/texts.js";
-import { PROCESS_STARTED } from "../utils/constants/attributes.js";
-import {
-    ELEMENT_UPLOAD_BUTTON,
-    ELEMENT_UPLOAD_BUTTON_TEXT
-} from "../utils/constants/elements.js";
+import { isWorkerRunning } from "../utils/worker/workerManager.js";
 
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -37,7 +28,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     await eel.stop_login_process()();
     const worker = await isWorkerRunning(
         UPLOAD_FILE, (message) => displayConsoleOutputs(message));
-    
+
     const uploadButton = document.querySelector(ELEMENT_UPLOAD_BUTTON);
     const uploadButtonText = document.querySelector(ELEMENT_UPLOAD_BUTTON_TEXT);
     uploadButtonText.textContent = worker ? STOP_TEXT : START_TEXT;

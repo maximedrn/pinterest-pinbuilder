@@ -1,27 +1,18 @@
-// web/js/utils/dataFilesManager.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 import "../common/format.js";
 import { stringToElement } from "../common/stringToElement.js";
-import { checkboxEvent } from "./checkboxManager.js";
-import { DATA_FILE_HTML_ELEMENT } from "./constants/dom.js";
-import { CHECKED } from "./constants/attributes.js";
 import {
-    CONTAINER_DATA_FILES,
-    ELEMENT_DATA_FILE,
-    ELEMENT_BROWSED_DATA_FILE_CLEAR,
-    ELEMENT_BROWSED_DATA_FILE_BUTTON,
     CONTAINER_BROWSED_DATA_FILE_TEXT,
+    CONTAINER_DATA_FILES,
+    CONTAINER_SELECTED_FILE,
+    ELEMENT_BROWSED_DATA_FILE_BUTTON,
+    ELEMENT_BROWSED_DATA_FILE_CLEAR,
     ELEMENT_BROWSED_DATA_FILE_TEXT,
-    ELEMENT_DATA_FILE_RELOAD,
-    CONTAINER_SELECTED_FILE
+    ELEMENT_DATA_FILE,
+    ELEMENT_DATA_FILE_RELOAD
 } from "../utils/constants/elements.js";
+import { checkboxEvent } from "./checkboxManager.js";
+import { CHECKED } from "./constants/attributes.js";
+import { DATA_FILE_HTML_ELEMENT } from "./constants/dom.js";
 import { DATA_FILE } from "./constants/values.js";
 
 
@@ -63,7 +54,7 @@ export function unselectBrowsedDataFile() {
         // Find the path element of browsed data file container element.
         const browsedDataFileContainerPath = document
             .querySelector(CONTAINER_BROWSED_DATA_FILE_TEXT);
-        const browsedDataFileContainerSpan = 
+        const browsedDataFileContainerSpan =
             [...document.querySelectorAll(ELEMENT_BROWSED_DATA_FILE_TEXT)];
         // Set the inner HTML of path element to empty.
         browsedDataFileContainerSpan.forEach(span => {

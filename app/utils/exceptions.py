@@ -1,18 +1,3 @@
-# -*- coding: utf-8 -*-
-# app/utils/exceptions.py
-
-
-"""
-@author: Pinterest Pinbuilder.
-
-Github: https://github.com/maximedrn
-Telegram: https://t.me/maximedrn
-
-Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
-Any distribution, modification or commercial use is strictly prohibited.
-"""
-
-
 class RequiredValueError(Exception):
     """Raised when a required value is missing or not provided.
 
@@ -74,18 +59,6 @@ class TempFileError(Exception):
     """
 
 
-class UpdateError(Exception):
-    """Raised when an error occurs during the update process.
-
-    This exception is used to handle errors related to updating
-    the tool or application.
-
-    Example:
-    --------
-        raise UpdateError('Failed to update the tool to the latest version.')
-    """
-
-
 class KillProcessError(Exception):
     """Raised when an error occurs while attempting to kill a process.
 
@@ -116,7 +89,7 @@ class WebdriverDownloadError(Exception):
 
     This exception is raised when an error occurs during the download
     of a webdriver for browser automation.
-    
+
     Example:
     --------
         raise WebdriverDownloadError("Failed to download the Webdriver.")
@@ -128,7 +101,7 @@ class WebdriverPatchError(Exception):
 
     This exception is raised when an error occurs while patching a webdriver
     for browser automation.
-    
+
     Example:
     --------
         raise WebdriverPatchError("Failed to patch the Webdriver.")
@@ -140,7 +113,7 @@ class CookieRetrievalError(Exception):
 
     This exception is raised when there are issues retrieving cookies
     required for authentication.
-    
+
     Example:
     --------
         raise CookieRetrievalError("Failed to retrieve cookies.")
@@ -152,7 +125,7 @@ class RequestError(Exception):
 
     This exception is raised when an error occurs during the upload process,
     such as failed uploads or other issues.
-    
+
     Example:
     --------
         raise RequestError("Failed to upload the asset.")
@@ -164,7 +137,7 @@ class LoggerError(Exception):
 
     This exception is raised when there are errors in the logging process,
     such as failures to write log entries or other logging-related issues.
-    
+
     Example:
     --------
         raise LoggerError("Error occurred while sending log content.")

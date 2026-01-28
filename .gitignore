@@ -1,8 +1,11 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+
 # Project related paths
 assets/.wdm/
 assets/cookies.json
-assets/license_key.json
-data/upload
+data/
 public/logs/*.json
 public/logs/*.html
 

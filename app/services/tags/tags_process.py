@@ -1,19 +1,5 @@
-# -*- coding: utf-8 -*-
-# app/services/tags/tags_process.py
+from typing import Any, Generator
 
-"""
-@author: Pinterest Pinbuilder.
-
-Github: https://github.com/maximedrn
-Telegram: https://t.me/maximedrn
-
-Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
-Any distribution, modification or commercial use is strictly prohibited.
-"""
-
-
-
-from typing import Any, Dict, Generator, List
 from app.constants.messages import NO_TOPIC_TAGS_FOUND
 from app.constants.processes import CREATE_PROCESS
 from app.services.login.cookie_manager import CookieManager
@@ -33,15 +19,15 @@ class TagProcess(TagsManager, UserManager):
 
     Private methods:
     ----------------
-        __get_users_cookies(self) -> Generator[str, List[Any], None]:
+        __get_users_cookies(self) -> Generator[str, list[Any], None]:
             Retrieve valid user UUIDs from user data and yield them for
             use in tag retrieval.
 
-        __retrieve_tags(self, uuid: str) -> List[Dict[str, Any]]:
+        __retrieve_tags(self, uuid: str) -> list[dict[str, Any]]:
             Retrieve tags using user cookies associated with the
             provided UUID.
 
-        __call__(self) -> List[Dict[str, Any]]:
+        __call__(self) -> list[dict[str, Any]]:
             Start the tag retrieval process and return the retrieved tags.
 
     Attributes:
@@ -49,7 +35,7 @@ class TagProcess(TagsManager, UserManager):
         __query (str): The query string used to search for tags.
 
     """
-    
+
     def __init__(self, query: str) -> None:
         """Initialize a TagProcess instance with a query string.
 
@@ -58,8 +44,8 @@ class TagProcess(TagsManager, UserManager):
             query (str): The query string used to search for tags.
         """
         self.__query: str = query
-    
-    def __get_users_cookies(self) -> Generator[str, List[Any], None]:
+
+    def __get_users_cookies(self) -> Generator[str, list[Any], None]:
         """Retrieve valid user UUIDs from user data and yield them for
         use in tag retrieval.
 
@@ -67,11 +53,11 @@ class TagProcess(TagsManager, UserManager):
         --------
             str: User UUIDs from the user data.
         """
-        __users: List[UserManager.UserData] = self.retrieve_users_data()
-        __valid_uuids: List[Any] = [user[1] for user in __users if user]
+        __users: list[UserManager.UserData] = self.retrieve_users_data()
+        __valid_uuids: list[Any] = [user[1] for user in __users if user]
         yield from __valid_uuids + [None]  # Prevent StopIteration error.
-        
-    def __retrieve_tags(self, uuid: str) -> List[Dict[str, Any]]:
+
+    def __retrieve_tags(self, uuid: str) -> list[dict[str, Any]]:
         """Retrieve tags using user cookies associated with the provided UUID.
 
         Parameters:
@@ -80,26 +66,26 @@ class TagProcess(TagsManager, UserManager):
 
         Returns:
         --------
-            List[Dict[str, Any]]: A list of tags retrieved using the user
+            list[dict[str, Any]]: A list of tags retrieved using the user
             cookies.
         """
-        __cookies: Dict[str, Any] = CookieManager.retrieve_cookies_by_id(uuid)
+        __cookies: dict[str, Any] = CookieManager.retrieve_cookies_by_id(uuid)
         __tags_manager: TagsManager = TagsManager(__cookies)
-        __tags: List[Dict[str, Any]] = __tags_manager(self.__query)
+        __tags: list[dict[str, Any]] = __tags_manager(self.__query)
         return __tags
-    
-    def __call__(self) -> List[Dict[str, Any]]:
+
+    def __call__(self) -> list[dict[str, Any]]:
         """Start the tag retrieval process and return the retrieved tags.
 
         Returns:
         --------
-            List[Dict[str, Any]]: A list of tags retrieved based on the
+            list[dict[str, Any]]: A list of tags retrieved based on the
             query string and user cookies.
         """
-        __uuids: Generator[str, List[str], None] = self.__get_users_cookies()
-        __tags: List[Dict[str, Any]] = []
+        __uuids: Generator[str, list[str], None] = self.__get_users_cookies()
+        __tags: list[dict[str, Any]] = []
         while not __tags and (__uuid := next(__uuids)):
-            __tags: List[Dict[str, Any]] = self.__retrieve_tags(__uuid)
+            __tags: list[dict[str, Any]] = self.__retrieve_tags(__uuid)
         if not __tags:  # Not tags or no account were added.
             Snackbar(CREATE_PROCESS).info(NO_TOPIC_TAGS_FOUND)
         return __tags

@@ -1,12 +1,3 @@
-// web/js/common/defined.js
-
-/**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
 import { EMPTY_VALUES } from "../utils/constants/values.js";
 
 

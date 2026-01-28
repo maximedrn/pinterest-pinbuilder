@@ -1,13 +1,6 @@
 // web/js/common/format.js
 
 /**
- * @author: Pinterest Pinbuilder.
- * Copyright © 2023 Pinterest Pinbuilder. All rights reserved.
- * Any distribution, modification or commercial use is strictly prohibited.
- */
-
-
-/**
  * Replaces placeholders in the string with values provided as arguments.
  *
  * This method replaces occurrences of "{}" in the string with values provided

@@ -9,7 +9,7 @@ package-mode = false
 [tool.poetry.dependencies]
 python = "^3.12"
 urllib3 = "^2.6.3"
-requests = "^2.32.5"
+requests = "^2.33.0"
 psutil = "^7.2.1"
 pillow = "^12.1.0"
 pyqt6 = { version = "6.10.2", markers = "sys_platform == 'linux' or sys_platform == 'darwin' or (sys_platform == 'win32' and platform_release >= '10')" }
